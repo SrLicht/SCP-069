@@ -9,13 +9,13 @@ SCP-069 is a new playable SCP, which will play out the same as SCP-049 without t
 ### 📜Commands📜
 | Command | Description |
 | ------------- | ------------------------------ |
-| `069`   | Test SCP-069 on the person using the command |
+| `069`   | Test SCP-069 on the person using the command. |
 
 
 ### ⚙️ Configuration ⚙️
 | Config | Description |
 | ------------- | ------------------------------ |
-| `IsEnabled` | Determine if the plugin is enabled or not |
+| `IsEnabled` | Determine if the plugin is enabled or not. |
 | `ClonerDamageEvery` | SCP-069 will take the amount of damage you put in this setting every second. |
 | `ClonerIncreaseDamageBy` | For every second that passes, the damage increases by the amount you put here. |
 | `ClonerkRatsNeeded` | The amount of Class-D required for SCP-069 to appear. |
@@ -26,5 +26,5 @@ SCP-069 is a new playable SCP, which will play out the same as SCP-049 without t
 | `Killbroadcast` | The message that will come out to the victim when he is killed by SCP-069. |
 
 ### Thanks for watching
-- And thanks to beryl for allowing me to use his README as a base
+- And thanks to Beryl for allowing me to use his README as a base.
 
