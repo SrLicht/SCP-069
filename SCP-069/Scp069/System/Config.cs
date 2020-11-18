@@ -29,6 +29,8 @@ namespace Scp069.System
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]
         public ushort BroadcastDuration { get; set; } = 8;
         public string Killbroadcast { get; set; } = "<b>You were assimilated by <color=red>SCP-069</color></b>";
+        public ushort SpawnBroadcastDuration { get; set; } = 8;
+        public string SpawnBroadcast { get; set; } = "<b><size=25>Eres el <color=red>SCP-069</color> al matar a un humano, adoptaras su tamaño, forma y inventario recibiras {dmg} de daño segundo pero te curaras {heal} por cada victima que asimiles</size></b>";
         #endregion
 
     }

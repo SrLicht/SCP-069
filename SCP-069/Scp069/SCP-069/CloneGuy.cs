@@ -71,6 +71,7 @@ namespace Scp069.SCP_069
 
                 player.Health = Plugin.Instance.Config.ClonerkHealth;
                 player.MaxHealth = Plugin.Instance.Config.ClonerkHealth;
+                player.Broadcast(Plugin.Instance.Config.SpawnBroadcastDuration, Plugin.Instance.Config.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.ClonerLifesteal.ToString()));
             } catch(Exception e) 
             {
                 Log.Error("Start Method: " + e.StackTrace);

@@ -32,11 +32,6 @@ namespace Scp069.System
 
                 Player.Joined += handler.JoinMessage;
 
-                Exiled.Events.Handlers.Scp049.FinishingRecall += handler.ZombieEndRevive;
-                Exiled.Events.Handlers.Scp049.StartingRecall += handler.ZombieStartRevive;
-
-
-
                 Log.Info("Plugin loaded correctly!");
 
                 #region Logo
@@ -77,12 +72,10 @@ namespace Scp069.System
         public override void OnDisabled()
         {
 
-
             Server.RoundEnded -= handler.RoundEnd;
             Server.RoundStarted -= handler.RoundStart;
 
             Player.Joined -= handler.JoinMessage;
-
 
             //Handlers
 
