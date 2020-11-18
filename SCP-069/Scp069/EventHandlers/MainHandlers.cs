@@ -75,7 +75,7 @@ namespace Scp069.EventHandlers
                         player.GameObject.AddComponent<CloneGuy>();
                     });
                 }
-            } catch(Exception) 
+            } catch(Exception e) 
             {
                 Log.Error("Awake Method: " + e.StackTrace);
             }

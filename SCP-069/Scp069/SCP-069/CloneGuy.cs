@@ -42,7 +42,7 @@ namespace Scp069.SCP_069
 
                 PlayerEvents.Dying += OnKill;
                 PlayerEvents.Dying += OnDeath;
-                PlayerEvents.ChangingRole += OnSetClass;
+                PlayerEvents.ChangingRole += OnRoleChange;
                 PlayerEvents.Left += OnLeave;
                 Scp049.StartingRecall += OnRecall;
             }
@@ -83,7 +83,7 @@ namespace Scp069.SCP_069
             {
                 PlayerEvents.Dying -= OnKill;
                 PlayerEvents.Dying -= OnDeath;
-                PlayerEvents.ChangingRole -= OnSetClass;
+                PlayerEvents.ChangingRole -= OnRoleChange;
                 PlayerEvents.Left -= OnLeave;
                 Scp049.StartingRecall -= OnRecall;
 
@@ -177,7 +177,7 @@ namespace Scp069.SCP_069
 
                 }
 
-                foreach (Player p in Player.Get(Side.Scp))
+                foreach (Player p in Player.Get(Team.SCP))
                 {
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
                         targetwriter.WritePackedUInt64(16UL);
