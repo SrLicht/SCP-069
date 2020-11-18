@@ -38,7 +38,7 @@ namespace Scp069.EventHandlers
                     return;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 Log.Error("OnRACommand Method: " + e.StackTrace);
             }
