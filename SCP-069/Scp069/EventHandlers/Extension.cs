@@ -10,6 +10,13 @@ namespace Scp069.EventHandlers
 {
     public static class Extension
     {
+        /// <summary>
+        /// Thanks Sanyae for this amazing method, love you so much
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="behaviorOwner"></param>
+        /// <param name="targetType"></param>
+        /// <param name="customSyncVar"></param>
         public static void SendCustomSyncVar(this ReferenceHub player, NetworkIdentity behaviorOwner, Type targetType, Action<NetworkWriter> customSyncVar)
         {
             NetworkWriter writer = NetworkWriterPool.GetWriter();
@@ -19,9 +26,14 @@ namespace Scp069.EventHandlers
             NetworkWriterPool.Recycle(writer);
             NetworkWriterPool.Recycle(writer2);
         }
-
-        public static IEnumerable<Player> GetHubs(this RoleType role) => Player.List.Where(r => r.Role == role);
-
+        
+        /// <summary>
+        /// Thanks Sanyae for this amazing method, love you so much
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="behaviorOwner"></param>
+        /// <param name="targetType"></param>
+        /// <param name="customSyncVar"></param>
         public static void MakeCustomSyncVarWriter(NetworkIdentity behaviorOwner, Type targetType, Action<NetworkWriter> customSyncVar, NetworkWriter owner, NetworkWriter observer)
         {
             ulong dirty = 0ul;

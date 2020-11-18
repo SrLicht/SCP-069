@@ -25,7 +25,6 @@ namespace Scp069.System
         [Description("The amount of HP SCP-069 has")]
         public int ClonerkHealth { get; set; } = 1540;
         [Description("As it says, the amount of life that is healed by killing.")]
-
         public int ClonerLifesteal { get; set; } = 150;
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]
         public ushort BroadcastDuration { get; set; } = 8;

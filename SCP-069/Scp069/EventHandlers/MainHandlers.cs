@@ -30,23 +30,17 @@ namespace Scp069.EventHandlers
         {
             try
             {
-
-                switch (ev.Name)
+                if(ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase)) 
                 {
-
-                    case "069":
-
-                        ev.Sender.SetRole(RoleType.Scp049);
-                        Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
-                        ev.ReplyMessage = "Wuuush you are gay now";
-                        return;
-
-
+                    ev.Sender.SetRole(RoleType.Scp049);
+                    Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
+                    ev.ReplyMessage = "You've become SCP-069.";
+                    return;
                 }
             }
             catch (Exception)
             {
-                Log.Error("Oooops command error");
+                Log.Error("OnRACommand Method: " + e.StackTrace);
             }
         }
 
@@ -64,40 +58,34 @@ namespace Scp069.EventHandlers
 
         public void RoundStart()
         {
-
-
-            if (UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count())
+            try 
             {
+                if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
+                                && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
+                {
 
-                Player player = RoleType.ClassD.GetHubs().FirstOrDefault();
+                    Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
 
-                if (player == null)
-                    return;
+                    if(player == null)
+                        return;
 
-                player.SetRole(RoleType.Scp049);
-                Timing.CallDelayed(1.5f, () => {
-                    player.GameObject.AddComponent<CloneGuy>();
-                });
+                    player.SetRole(RoleType.Scp049);
+                    Timing.CallDelayed(1.5f, () => 
+                    {
+                        player.GameObject.AddComponent<CloneGuy>();
+                    });
+                }
+            } catch(Exception) 
+            {
+                Log.Error("Awake Method: " + e.StackTrace);
             }
+            
         }
 
         public void RoundEnd(RoundEndedEventArgs ev)
         {
             cloneGuy = null;
-        }
-
-        public void ZombieStartRevive(StartingRecallEventArgs ev)
-        {
-            if (cloneGuy == ev.Scp049)
-                return;
-
-        }
-
-        public void ZombieEndRevive(FinishingRecallEventArgs ev)
-        {
-            if (cloneGuy == ev.Scp049)
-                return;
+            cloneGuyRole = RoleType.Scp049;
         }
 
     }

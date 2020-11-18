@@ -18,15 +18,11 @@ namespace Scp069.System
         MainHandlers handler;
         public override string Author { get; } = "SrLicht & Beryl";
 
-
-
         public override void OnEnabled()
         {
             try
             {
                 Log.Debug("Initializing EventsHandler...");
-
-
 
                 handler = new MainHandlers();
 
@@ -86,9 +82,6 @@ namespace Scp069.System
             Server.RoundStarted -= handler.RoundStart;
 
             Player.Joined -= handler.JoinMessage;
-
-            Exiled.Events.Handlers.Scp049.FinishingRecall -= handler.ZombieEndRevive;
-            Exiled.Events.Handlers.Scp049.StartingRecall -= handler.ZombieStartRevive;
 
 
             //Handlers

@@ -16,7 +16,7 @@ namespace Scp069.SCP_069
     public class CloneGuy : MonoBehaviour
     {
 
-        private Player player;
+        public Player player;
         private float damageTimer, damageDealt = 0;
 
         private void Update()
@@ -48,17 +48,65 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error(e.ToString());
+                Log.Error("Awake Method: " + e.StackTrace);
+            }
+        }
+
+        private void Start() 
+        {
+            try 
+            {
+                if(player == null)
+                    player = Player.Get(gameObject);
+                if(player == null)
+                    throw new NullReferenceException("Player not found.");
+
+                if(MainHandlers.cloneGuy != null) 
+                {
+                    Destroy(this);
+                    return;
+                }
+
+                MainHandlers.cloneGuy = player;
+
+                player.Health = Plugin.Instance.Config.ClonerkHealth;
+                player.MaxHealth = Plugin.Instance.Config.ClonerkHealth;
+            } catch(Exception e) 
+            {
+                Log.Error("Start Method: " + e.StackTrace);
+            }
+        }
+
+        private void OnDestroy() 
+        {
+            try 
+            {
+                PlayerEvents.Dying -= OnKill;
+                PlayerEvents.Dying -= OnDeath;
+                PlayerEvents.ChangingRole -= OnSetClass;
+                PlayerEvents.Left -= OnLeave;
+                Scp049.StartingRecall -= OnRecall;
+
+                MainHandlers.cloneGuy = null;
+            } catch(Exception e) 
+            {
+                Log.Error("OnDestroy Method: " + e.StackTrace);
             }
         }
 
         private void OnLeave(LeftEventArgs ev)
         {
-            if (ev.Player == player)
-                Destroy(this);
+            try 
+            {
+                if(ev.Player == player)
+                    Destroy(this);
+            } catch(Exception e) 
+            {
+                Log.Error("OnLeave Method: " + e.StackTrace);
+            }
         }
 
-        private void OnSetClass(ChangingRoleEventArgs ev)
+        private void OnRoleChange(ChangingRoleEventArgs ev)
         {
             try
             {
@@ -67,14 +115,13 @@ namespace Scp069.SCP_069
 
                 if (ev.NewRole != RoleType.Scp049)
                 {
-                    Log.Info("SCP-035 Component destroyed. SC");
                     Destroy(this);
                 }
 
             }
             catch (Exception e)
             {
-                Log.Error(e.ToString());
+                Log.Error("OnRoleChange Method: " + e.StackTrace);
             }
         }
 
@@ -93,18 +140,16 @@ namespace Scp069.SCP_069
                 if (ev.Target != player)
                     return;
 
-                Log.Info("SCP-035 Component destroyed. OD");
-
                 Destroy(this);
                 ev.Target.DisplayNickname = null;
             }
             catch (Exception e)
             {
-                Log.Error(e.ToString());
+                Log.Error("OnDeath Method: " + e.StackTrace);
             }
         }
 
-        public void OnKill(DyingEventArgs ev)
+        private void OnKill(DyingEventArgs ev)
         {
             try
             {
@@ -132,7 +177,7 @@ namespace Scp069.SCP_069
 
                 }
 
-                foreach (Player p in Player.List.Where(r => r.Side != Side.Scp))
+                foreach (Player p in Player.Get(Side.Scp))
                 {
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
                         targetwriter.WritePackedUInt64(16UL);
@@ -155,52 +200,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error(e.ToString());
-            }
-        }
-
-        private void Start()
-        {
-            try
-            {
-                if (player == null)
-                    player = Player.Get(gameObject);
-                if (player == null)
-                    throw new NullReferenceException("Player not found.");
-
-                if (MainHandlers.cloneGuy != null)
-                {
-                    Log.Info("SCP-035 Component destroyed. ST");
-                    Destroy(this);
-                    return;
-                }
-
-                MainHandlers.cloneGuy = player;
-
-                player.Health = Plugin.Instance.Config.ClonerkHealth;
-                player.MaxHealth = Plugin.Instance.Config.ClonerkHealth;
-            }
-            catch (Exception e)
-            {
-                Log.Error(e.ToString());
-            }
-        }
-
-        private void OnDestroy()
-        {
-            try
-            {
-                PlayerEvents.Dying -= OnKill;
-                PlayerEvents.Dying -= OnDeath;
-                PlayerEvents.ChangingRole -= OnSetClass;
-                PlayerEvents.Left -= OnLeave;
-                Scp049.StartingRecall -= OnRecall;
-
-                MainHandlers.cloneGuy = null;
-            }
-            catch (Exception e)
-            {
-                Log.Error(e.ToString());
+                Log.Error("OnKill Method: " + e.StackTrace);
             }
         }
     }
