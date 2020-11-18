@@ -28,7 +28,7 @@ namespace Scp069.System
         public int ClonerLifesteal { get; set; } = 150;
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]
         public ushort BroadcastDuration { get; set; } = 8;
-        public string Killbroadcast { get; set; } = "<b>You were assimilated by <color=red>SCP-069</color></b>";
+        public string Killbroadcast { get; set; } = "<b>You were killed by <color=red>SCP-069</color></b>";
         #endregion
 
     }
