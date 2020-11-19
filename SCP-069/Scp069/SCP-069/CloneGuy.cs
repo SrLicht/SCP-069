@@ -152,7 +152,7 @@ namespace Scp069.SCP_069
         {
             try
             {
-                if (ev.Killer != player)
+                if (ev.Killer != player && ev.Target != player)
                     return;
 
                 ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
