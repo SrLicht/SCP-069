@@ -34,17 +34,17 @@ namespace Scp069.EventHandlers
                 {
                     ev.Sender.SetRole(RoleType.Scp049);
                     Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
-                    ev.ReplyMessage = "You've become SCP-069.";
+                    ev.ReplyMessage = "You've become <color=red>SCP-069</color>.";
                     return;
                 }
             }
             catch (Exception e)
             {
-                Log.Error("OnRACommand Method: " + e.StackTrace);
+                Log.Error("OnRACommand Method: " + e.ToString());
             }
         }
 
-        public void JoinMessage(JoinedEventArgs ev)
+        public void OnJoin(JoinedEventArgs ev)
         {
             if (cloneGuy != null)
             {
@@ -58,10 +58,9 @@ namespace Scp069.EventHandlers
 
         public void RoundStart()
         {
-            try 
+            try
             {
-                if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                                && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
+                if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
                 {
 
                     Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
@@ -70,6 +69,7 @@ namespace Scp069.EventHandlers
                         return;
 
                     player.SetRole(RoleType.Scp049);
+
                     Timing.CallDelayed(1.5f, () => 
                     {
                         player.GameObject.AddComponent<CloneGuy>();
@@ -77,7 +77,7 @@ namespace Scp069.EventHandlers
                 }
             } catch(Exception e) 
             {
-                Log.Error("Awake Method: " + e.StackTrace);
+                Log.Error("Awake Method: " + e.ToString());
             }
             
         }

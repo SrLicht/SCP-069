@@ -48,7 +48,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("Awake Method: " + e.StackTrace);
+                Log.Error("Awake Method: " + e.ToString());
             }
         }
 
@@ -74,7 +74,7 @@ namespace Scp069.SCP_069
                 player.Broadcast(Plugin.Instance.Config.SpawnBroadcastDuration, Plugin.Instance.Config.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.ClonerLifesteal.ToString()));
             } catch(Exception e) 
             {
-                Log.Error("Start Method: " + e.StackTrace);
+                Log.Error("Start Method: " + e.ToString());
             }
         }
 
@@ -91,7 +91,7 @@ namespace Scp069.SCP_069
                 MainHandlers.cloneGuy = null;
             } catch(Exception e) 
             {
-                Log.Error("OnDestroy Method: " + e.StackTrace);
+                Log.Error("OnDestroy Method: " + e.ToString());
             }
         }
 
@@ -103,7 +103,7 @@ namespace Scp069.SCP_069
                     Destroy(this);
             } catch(Exception e) 
             {
-                Log.Error("OnLeave Method: " + e.StackTrace);
+                Log.Error("OnLeave Method: " + e.ToString());
             }
         }
 
@@ -122,7 +122,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnRoleChange Method: " + e.StackTrace);
+                Log.Error("OnRoleChange Method: " + e.ToString());
             }
         }
 
@@ -146,7 +146,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnDeath Method: " + e.StackTrace);
+                Log.Error("OnDeath Method: " + e.ToString());
             }
         }
 
@@ -201,7 +201,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnKill Method: " + e.StackTrace);
+                Log.Error("OnKill Method: " + e.ToString());
             }
         }
     }
