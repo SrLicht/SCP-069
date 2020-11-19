@@ -18,6 +18,8 @@ namespace Scp069.System
         public float ClonerDamageEvery { get; set; } = 10;
         [Description("For every second that passes, the damage increases by the amount you put here")]
         public float ClonerIncreaseDamageBy { get; set; } = 10;
+        public float GracePeriodStart { get; set; } = 30;
+        public float GracePeriodOnKill { get; set; } = 15;
         [Description("The amount of Class-D required for 069 to appear")]
         public int ClonerRatsNeeded { get; set; } = 4;
         [Description("The probability that SCP-069 will appear, if the above requirement is met")]

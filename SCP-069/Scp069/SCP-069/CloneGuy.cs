@@ -10,6 +10,8 @@ using System.Linq;
 using Mirror;
 using Scp069.System;
 using Scp069.EventHandlers;
+using MEC;
+using System.Collections.Generic;
 
 namespace Scp069.SCP_069
 {
