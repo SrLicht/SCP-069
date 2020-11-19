@@ -19,11 +19,11 @@ namespace Scp069.System
         [Description("For every second that passes, the damage increases by the amount you put here")]
         public float ClonerIncreaseDamageBy { get; set; } = 10;
         [Description("The amount of Class-D required for 069 to appear")]
-        public int ClonerkRatsNeeded { get; set; } = 4;
+        public int ClonerRatsNeeded { get; set; } = 4;
         [Description("The probability that SCP-069 will appear, if the above requirement is met")]
         public int ClonerChance { get; set; } = 55;
         [Description("The amount of HP SCP-069 has")]
-        public int ClonerkHealth { get; set; } = 1540;
+        public int ClonerHealth { get; set; } = 1540;
         [Description("As it says, the amount of life that is healed by killing.")]
         public int ClonerLifesteal { get; set; } = 150;
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]

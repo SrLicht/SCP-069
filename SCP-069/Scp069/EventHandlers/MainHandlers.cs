@@ -62,7 +62,7 @@ namespace Scp069.EventHandlers
             {
                 Timing.CallDelayed(1f, () => {
                     if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                                    && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
+                                    && plugin.Config.ClonerRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
                     {
 
                         Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
