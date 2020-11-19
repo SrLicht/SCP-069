@@ -14,7 +14,7 @@ SCP-069 is a new playable SCP, which will play out the same as SCP-049 without t
 
 ### ⚙️ Configuration ⚙️
 | Config | Default |Description |
-| ------------- |------------------------------------------------------------| ------------------------------ |
+| ------------- |------------------------------| ------------------------------ |
 | `IsEnabled` | **true** | Determine if the plugin is enabled or not. |
 | `ClonerDamageEvery` | **10** | SCP-069 will take the amount of damage you put in this setting every second. |
 | `ClonerIncreaseDamageBy` | **10** | For every second that passes, the damage increases by the amount you put here. |
