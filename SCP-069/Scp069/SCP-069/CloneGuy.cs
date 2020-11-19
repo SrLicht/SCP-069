@@ -73,6 +73,7 @@ namespace Scp069.SCP_069
 
                 player.Health = Plugin.Instance.Config.ClonerHealth;
                 player.MaxHealth = Plugin.Instance.Config.ClonerHealth;
+                player.ClearBroadcasts();
                 player.Broadcast(Plugin.Instance.Config.SpawnBroadcastDuration, Plugin.Instance.Config.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.ClonerLifesteal.ToString()));
             } catch(Exception e) 
             {
@@ -181,8 +182,8 @@ namespace Scp069.SCP_069
                 ev.Killer.Health += Plugin.Instance.Config.ClonerLifesteal;
                 damageDealt = 10;
                 MainHandlers.cloneGuyRole = ev.Target.Role;
-
-                if (Plugin.Instance.Config.BroadcastDuration > 0)
+                
+                if (Plugin.Instance.Config.BroadcastDuration > 0 && ev.Target != MainHandlers.cloneGuy)
                 {
                     ev.Target.ClearBroadcasts();
                     ev.Target.Broadcast(Plugin.Instance.Config.BroadcastDuration, Plugin.Instance.Config.Killbroadcast);
