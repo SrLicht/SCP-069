@@ -32,12 +32,7 @@ namespace Scp069.System
                 Server.RoundStarted += handler.RoundStart;
                 Server.SendingRemoteAdminCommand += handler.OnRACommand;
 
-                Player.Joined += handler.JoinMessage;
-
-                Exiled.Events.Handlers.Scp049.FinishingRecall += handler.ZombieEndRevive;
-                Exiled.Events.Handlers.Scp049.StartingRecall += handler.ZombieStartRevive;
-
-
+                Player.Joined += handler.OnJoin;
 
                 Log.Info("Plugin loaded correctly!");
 
@@ -79,12 +74,10 @@ namespace Scp069.System
         public override void OnDisabled()
         {
 
-
             Server.RoundEnded -= handler.RoundEnd;
             Server.RoundStarted -= handler.RoundStart;
 
-            Player.Joined -= handler.JoinMessage;
-
+            Player.Joined -= handler.OnJoin;
 
             //Handlers
 
