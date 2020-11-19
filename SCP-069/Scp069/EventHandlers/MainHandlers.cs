@@ -61,7 +61,7 @@ namespace Scp069.EventHandlers
             try 
             {
                 Timing.CallDelayed(1f, () => {
-                    if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
+                    if(!CerberusTweaks.Plugin.InEvent && UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
                                     && plugin.Config.ClonerRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
                     {
 
