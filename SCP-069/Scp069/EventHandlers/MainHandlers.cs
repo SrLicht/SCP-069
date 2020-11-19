@@ -60,21 +60,23 @@ namespace Scp069.EventHandlers
         {
             try 
             {
-                if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                                && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
-                {
-
-                    Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
-
-                    if(player == null)
-                        return;
-
-                    player.SetRole(RoleType.Scp049);
-                    Timing.CallDelayed(1.5f, () => 
+                Timing.CallDelayed(1f, () => {
+                    if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
+                                    && plugin.Config.ClonerkRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
                     {
-                        player.GameObject.AddComponent<CloneGuy>();
-                    });
-                }
+
+                        Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
+
+                        if(player == null)
+                            return;
+
+                        player.SetRole(RoleType.Scp049);
+                        Timing.CallDelayed(1.5f, () =>
+                        {
+                            player.GameObject.AddComponent<CloneGuy>();
+                        });
+                    }
+                });
             } catch(Exception e) 
             {
                 Log.Error("RoundStart Method: " + e.ToString());
