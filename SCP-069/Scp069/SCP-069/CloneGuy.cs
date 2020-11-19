@@ -134,6 +134,7 @@ namespace Scp069.SCP_069
         }
 
         private IEnumerator<float> EnableDamage(float seconds) {
+            damageEnabled = false;
             yield return Timing.WaitForSeconds(seconds);
             damageEnabled = true;
         }
@@ -171,6 +172,8 @@ namespace Scp069.SCP_069
 
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
 
+                ev.Killer.Scale = ev.Target.Scale;
+
                 ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
 
                 ItemType t = ItemType.None;
@@ -184,7 +187,7 @@ namespace Scp069.SCP_069
                 ev.Killer.Health += Plugin.Instance.Config.ClonerLifesteal;
                 damageDealt = 10;
                 MainHandlers.cloneGuyRole = ev.Target.Role;
-                
+
                 if (Plugin.Instance.Config.BroadcastDuration > 0 && ev.Target != MainHandlers.cloneGuy)
                 {
                     ev.Target.ClearBroadcasts();

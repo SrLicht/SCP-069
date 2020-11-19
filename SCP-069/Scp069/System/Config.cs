@@ -32,7 +32,7 @@ namespace Scp069.System
         public ushort BroadcastDuration { get; set; } = 8;
         public string Killbroadcast { get; set; } = "<b>You were killed by <color=red>SCP-069</color></b>";
         public ushort SpawnBroadcastDuration { get; set; } = 8;
-        public string SpawnBroadcast { get; set; } = "<b><size=25>Eres el <color=red>SCP-069</color> al matar a un humano, adoptaras su tamaño, forma y inventario recibiras {dmg} de daño segundo pero te curaras {heal} por cada victima que asimiles</size></b>";
+        public string SpawnBroadcast { get; set; } = "<b><size=25>You're <color=red>SCP-069</color>. When killing a human, you will steal it's shape, inventory and size. You will also receive {dmg} damage every few seconds until you find a new victim, also healing for {heal}hp on every kill.</size></b>";
         #endregion
 
     }
