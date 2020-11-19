@@ -18,10 +18,12 @@ namespace Scp069.SCP_069
 
         private Player player;
         private float damageTimer, damageDealt = 0;
+        private CoroutineHandle enableDamage;
+        private bool damageEnabled = false;
 
         private void Update()
         {
-            if (damageTimer <= Time.time)
+            if (damageEnabled && damageTimer <= Time.time)
             {
                 player.Hurt(damageDealt, DamageTypes.RagdollLess, "SCP-069");
                 damageDealt += Plugin.Instance.Config.ClonerIncreaseDamageBy;
@@ -65,6 +67,8 @@ namespace Scp069.SCP_069
                     return;
                 }
 
+                enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
+
                 MainHandlers.cloneGuy = player;
 
                 player.Health = Plugin.Instance.Config.ClonerHealth;
@@ -87,6 +91,8 @@ namespace Scp069.SCP_069
                 Scp049.StartingRecall -= OnRecall;
 
                 MainHandlers.cloneGuy = null;
+
+                Timing.KillCoroutines(enableDamage);
             } catch(Exception e) 
             {
                 Log.Error("OnDestroy Method: " + e.ToString());
@@ -124,6 +130,11 @@ namespace Scp069.SCP_069
             }
         }
 
+        private IEnumerator<float> EnableDamage(float seconds) {
+            yield return Timing.WaitForSeconds(seconds);
+            damageEnabled = true;
+        }
+
         private void OnRecall(StartingRecallEventArgs ev)
         {
             if (ev.Scp049 != player)
@@ -154,6 +165,8 @@ namespace Scp069.SCP_069
             {
                 if (ev.Killer != player && ev.Target != player)
                     return;
+
+                enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
 
                 ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
 
