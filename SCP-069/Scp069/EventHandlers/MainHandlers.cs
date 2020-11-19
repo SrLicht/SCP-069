@@ -77,7 +77,7 @@ namespace Scp069.EventHandlers
                 }
             } catch(Exception) 
             {
-                Log.Error("Awake Method: " + e.StackTrace);
+                Log.Error("RoundStart Method: " + e.StackTrace);
             }
             
         }

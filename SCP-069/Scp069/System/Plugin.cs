@@ -24,6 +24,8 @@ namespace Scp069.System
             {
                 Log.Debug("Initializing EventsHandler...");
 
+                Instance = this;
+
                 handler = new MainHandlers();
 
                 Server.RoundEnded += handler.RoundEnd;

@@ -16,7 +16,7 @@ namespace Scp069.SCP_069
     public class CloneGuy : MonoBehaviour
     {
 
-        public Player player;
+        private Player player;
         private float damageTimer, damageDealt = 0;
 
         private void Update()
@@ -58,8 +58,6 @@ namespace Scp069.SCP_069
             {
                 if(player == null)
                     player = Player.Get(gameObject);
-                if(player == null)
-                    throw new NullReferenceException("Player not found.");
 
                 if(MainHandlers.cloneGuy != null) 
                 {
