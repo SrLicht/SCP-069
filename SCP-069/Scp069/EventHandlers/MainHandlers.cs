@@ -38,9 +38,9 @@ namespace Scp069.EventHandlers
                     return;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Log.Error("OnRACommand Method: " + e.StackTrace);
+                Log.Error("OnRACommand Method: " + e.ToString());
             }
         }
 
@@ -75,9 +75,9 @@ namespace Scp069.EventHandlers
                         player.GameObject.AddComponent<CloneGuy>();
                     });
                 }
-            } catch(Exception) 
+            } catch(Exception e) 
             {
-                Log.Error("RoundStart Method: " + e.StackTrace);
+                Log.Error("RoundStart Method: " + e.ToString());
             }
             
         }
