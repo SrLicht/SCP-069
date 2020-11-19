@@ -18,7 +18,9 @@ namespace Scp069.System
         public float ClonerDamageEvery { get; set; } = 10;
         [Description("For every second that passes, the damage increases by the amount you put here")]
         public float ClonerIncreaseDamageBy { get; set; } = 10;
+        [Description("After this time, SCP-069 will begin to take damage for every second. Technically it is a Spawn protect.")]
         public float GracePeriodStart { get; set; } = 30;
+        [Description("When SCP-069 kills someone, they will not take damage per second, for as long as you specify (In seconds obviously)")]
         public float GracePeriodOnKill { get; set; } = 15;
         [Description("The amount of Class-D required for 069 to appear")]
         public int ClonerRatsNeeded { get; set; } = 4;
