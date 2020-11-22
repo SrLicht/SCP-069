@@ -167,7 +167,7 @@ namespace Scp069.SCP_069
         {
             try
             {
-                if (ev.Killer != player && ev.Target != player)
+                if (ev.Killer != player && ev.Target == player)
                     return;
 
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
@@ -195,14 +195,14 @@ namespace Scp069.SCP_069
 
                 }
 
-                foreach (Player p in Player.Get(Team.SCP))
+                foreach (Player p in Player.List)
                 {
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
                         targetwriter.WritePackedUInt64(16UL);
                         targetwriter.WriteSByte((sbyte)MainHandlers.cloneGuyRole);
                     });
 
-                    if (p != ev.Target && p != ev.Killer)
+                    if (p == ev.Killer)
                         continue;
 
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) => {
