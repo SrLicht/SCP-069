@@ -167,7 +167,7 @@ namespace Scp069.SCP_069
         {
             try
             {
-                if (ev.Killer != player && ev.Target == player)
+                if (ev.Killer != player || ev.Target == player)
                     return;
 
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
