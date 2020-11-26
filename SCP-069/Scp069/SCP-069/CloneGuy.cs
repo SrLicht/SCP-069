@@ -197,13 +197,12 @@ namespace Scp069.SCP_069
 
                 foreach (Player p in Player.List)
                 {
+                    if (p.Side == Side.Scp) continue;
+
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
                         targetwriter.WritePackedUInt64(16UL);
                         targetwriter.WriteSByte((sbyte)MainHandlers.cloneGuyRole);
                     });
-
-                    if (p == ev.Killer)
-                        continue;
 
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) => {
                         targetwriter.WritePackedUInt64(1UL);
