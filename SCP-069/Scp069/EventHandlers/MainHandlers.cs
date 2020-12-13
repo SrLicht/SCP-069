@@ -25,7 +25,6 @@ namespace Scp069.EventHandlers
         public static Player cloneGuy = null;
         public static RoleType cloneGuyRole = RoleType.Scp049;
 
-
         public void OnRACommand(SendingRemoteAdminCommandEventArgs ev)
         {
             try
@@ -61,10 +60,15 @@ namespace Scp069.EventHandlers
             try 
             {
                 Timing.CallDelayed(1f, () => {
+                    var list = Player.Get(RoleType.ClassD).ToList();
+
                     if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                     && Player.Get(RoleType.ClassD).Count() >= plugin.Config.ClonerRatsNeeded) 
+                     && list.Count() >= plugin.Config.ClonerRatsNeeded) 
                     {
-                        Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
+
+                        list.Shuffle();
+
+                        Player player = list.FirstOrDefault();
 
                         if(player == null)
                             return;

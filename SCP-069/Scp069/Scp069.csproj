@@ -33,13 +33,13 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp_public">
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\Assembly-CSharp_public.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\Assembly-CSharp_public.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core">
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\CommandSystem.Core.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.API, Version=2.1.19.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.2.1.19\lib\net472\Exiled.API.dll</HintPath>
@@ -60,7 +60,7 @@
       <HintPath>..\packages\EXILED.2.1.19\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\Mirror.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,10 +71,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\Server_SCP\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\..\Referencias\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
