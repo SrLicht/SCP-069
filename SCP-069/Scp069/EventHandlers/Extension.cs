@@ -26,7 +26,7 @@ namespace Scp069.EventHandlers
             NetworkWriterPool.Recycle(writer);
             NetworkWriterPool.Recycle(writer2);
         }
-        
+
         /// <summary>
         /// Thanks Sanyae for this amazing method, love you so much
         /// </summary>
@@ -67,6 +67,21 @@ namespace Scp069.EventHandlers
             {
                 ArraySegment<byte> arraySegment = owner.ToArraySegment();
                 observer.WriteBytes(arraySegment.Array, position, owner.Position - position);
+            }
+        }
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+
+
             }
         }
     }

@@ -61,13 +61,17 @@ namespace Scp069.EventHandlers
             try 
             {
                 Timing.CallDelayed(1f, () => {
-                    if(!CerberusTweaks.Plugin.InEvent && UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                     && Player.Get(RoleType.ClassD).Count() >= plugin.Config.ClonerRatsNeeded)
+                    var list = Player.Get(RoleType.ClassD).ToList();
+
+                    if (!CerberusTweaks.Plugin.InEvent && UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
+                     && list.Count() >= plugin.Config.ClonerRatsNeeded)
                     {
 
-                        Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
+                        list.Shuffle();
 
-                        if(player == null)
+                        Player player = list.FirstOrDefault();
+
+                        if (player == null)
                             return;
 
                         player.SetRole(RoleType.Scp049);
