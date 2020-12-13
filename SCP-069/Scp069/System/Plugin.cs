@@ -76,6 +76,7 @@ namespace Scp069.System
 
             Server.RoundEnded -= handler.RoundEnd;
             Server.RoundStarted -= handler.RoundStart;
+            Server.SendingRemoteAdminCommand -= handler.OnRACommand;
 
             Player.Joined -= handler.JoinMessage;
 

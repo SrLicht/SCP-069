@@ -85,8 +85,8 @@ namespace Scp069.SCP_069
 
         private void OnDestroy() 
         {
-            try 
-            {
+            try {
+                Log.Info("096 Component Destroyed");
                 PlayerEvents.Dying -= OnKill;
                 PlayerEvents.Dying -= OnDeath;
                 PlayerEvents.ChangingRole -= OnRoleChange;
