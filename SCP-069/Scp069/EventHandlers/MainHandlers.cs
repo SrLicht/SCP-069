@@ -17,7 +17,7 @@ namespace Scp069.EventHandlers
 {
     public class MainHandlers
     {
-        Plugin plugin;
+        Plugin plugin = Plugin.Instance;
 
         /// <summary>
         /// Can be null
@@ -62,7 +62,7 @@ namespace Scp069.EventHandlers
             {
                 Timing.CallDelayed(1f, () => {
                     if(!CerberusTweaks.Plugin.InEvent && UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                     && plugin.Config.ClonerRatsNeeded >= Player.Get(RoleType.ClassD).Count()) 
+                     && Player.Get(RoleType.ClassD).Count() >= plugin.Config.ClonerRatsNeeded)
                     {
 
                         Player player = Player.Get(RoleType.ClassD).FirstOrDefault();
