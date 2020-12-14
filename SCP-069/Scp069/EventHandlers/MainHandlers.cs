@@ -25,12 +25,11 @@ namespace Scp069.EventHandlers
         public static Player cloneGuy = null;
         public static RoleType cloneGuyRole = RoleType.Scp049;
 
-
         public void OnRACommand(SendingRemoteAdminCommandEventArgs ev)
         {
             try
             {
-                if(ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase)) 
+                if (ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase))
                 {
                     ev.Sender.SetRole(RoleType.Scp049);
                     Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
@@ -58,7 +57,7 @@ namespace Scp069.EventHandlers
 
         public void RoundStart()
         {
-            try 
+            try
             {
                 Timing.CallDelayed(1f, () => {
                     var list = Player.Get(RoleType.ClassD).ToList();
@@ -81,11 +80,12 @@ namespace Scp069.EventHandlers
                         });
                     }
                 });
-            } catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 Log.Error("RoundStart Method: " + e.ToString());
             }
-            
+
         }
 
         public void RoundEnd(RoundEndedEventArgs ev)
