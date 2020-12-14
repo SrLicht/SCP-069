@@ -28,6 +28,8 @@ namespace Scp069.System
         public int ClonerChance { get; set; } = 55;
         [Description("The amount of HP SCP-069 has")]
         public int ClonerHealth { get; set; } = 1540;
+        [Description("The maximum HP that SCP-069 can achieve")]
+        public int ClonerMaxHealth { get; set; } = 2000;
         [Description("As it says, the amount of life that is healed by killing.")]
         public int ClonerLifesteal { get; set; } = 150;
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]
