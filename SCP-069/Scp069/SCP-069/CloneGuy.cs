@@ -72,7 +72,7 @@ namespace Scp069.SCP_069
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
 
                 MainHandlers.cloneGuy = player;
-
+                player.CustomPlayerInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
                 player.Health = Plugin.Instance.Config.ClonerHealth;
                 player.MaxHealth = Plugin.Instance.Config.ClonerMaxHealth;
                 player.ClearBroadcasts();
@@ -155,6 +155,7 @@ namespace Scp069.SCP_069
                     return;
 
                 Destroy(this);
+                ev.Target.CustomPlayerInfo = "";
                 ev.Target.DisplayNickname = null;
             }
             catch (Exception e)
