@@ -93,6 +93,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.ChangingRole -= OnRoleChange;
                 PlayerEvents.Left -= OnLeave;
                 Scp049.StartingRecall -= OnRecall;
+                player.CustomPlayerInfo = $"";
 
                 MainHandlers.cloneGuy = null;
 
@@ -124,6 +125,8 @@ namespace Scp069.SCP_069
 
                 if (ev.NewRole != RoleType.Scp049)
                 {
+                    ev.Player.CustomPlayerInfo = "";
+                    ev.Player.DisplayNickname = null;
                     Destroy(this);
                 }
 
