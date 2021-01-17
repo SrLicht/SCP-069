@@ -29,7 +29,7 @@ namespace Scp069.EventHandlers
         {
             try
             {
-                if(ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase)) 
+                if (ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase))
                 {
                     ev.Sender.SetRole(RoleType.Scp049);
                     Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
@@ -57,20 +57,20 @@ namespace Scp069.EventHandlers
 
         public void RoundStart()
         {
-            try 
+            try
             {
                 Timing.CallDelayed(1f, () => {
                     var list = Player.Get(RoleType.ClassD).ToList();
 
-                    if(UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                     && list.Count() >= plugin.Config.ClonerRatsNeeded) 
+                    if (UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
+                     && list.Count() >= plugin.Config.ClonerRatsNeeded)
                     {
 
                         list.Shuffle();
 
                         Player player = list.FirstOrDefault();
 
-                        if(player == null)
+                        if (player == null)
                             return;
 
                         player.SetRole(RoleType.Scp049);
@@ -80,11 +80,12 @@ namespace Scp069.EventHandlers
                         });
                     }
                 });
-            } catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 Log.Error("RoundStart Method: " + e.ToString());
             }
-            
+
         }
 
         public void RoundEnd(RoundEndedEventArgs ev)

@@ -72,7 +72,8 @@ namespace Scp069.SCP_069
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
 
                 MainHandlers.cloneGuy = player;
-                player.CustomPlayerInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
+                player.CustomInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
+
                 player.Health = Plugin.Instance.Config.ClonerHealth;
                 player.MaxHealth = Plugin.Instance.Config.ClonerMaxHealth;
                 player.ClearBroadcasts();
@@ -92,6 +93,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.ChangingRole -= OnRoleChange;
                 PlayerEvents.Left -= OnLeave;
                 Scp049.StartingRecall -= OnRecall;
+                player.CustomInfo = $"";
 
                 MainHandlers.cloneGuy = null;
 
@@ -123,6 +125,8 @@ namespace Scp069.SCP_069
 
                 if (ev.NewRole != RoleType.Scp049)
                 {
+                    ev.Player.CustomInfo = "";
+                    ev.Player.DisplayNickname = null;
                     Destroy(this);
                 }
 
@@ -155,7 +159,7 @@ namespace Scp069.SCP_069
                     return;
 
                 Destroy(this);
-                ev.Target.CustomPlayerInfo = "";
+                ev.Target.CustomInfo = "";
                 ev.Target.DisplayNickname = null;
             }
             catch (Exception e)
