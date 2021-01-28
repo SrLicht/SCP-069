@@ -47,7 +47,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.Dying += OnKill;
                 PlayerEvents.Dying += OnDeath;
                 PlayerEvents.ChangingRole += OnRoleChange;
-                PlayerEvents.Left += OnLeave;
+                PlayerEvents.Destroying += OnLeave;
                 Scp049.StartingRecall += OnRecall;
             }
             catch (Exception e)
@@ -91,7 +91,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.Dying -= OnKill;
                 PlayerEvents.Dying -= OnDeath;
                 PlayerEvents.ChangingRole -= OnRoleChange;
-                PlayerEvents.Left -= OnLeave;
+                PlayerEvents.Destroying -= OnLeave;
                 Scp049.StartingRecall -= OnRecall;
                 player.CustomInfo = $"";
 
@@ -104,7 +104,7 @@ namespace Scp069.SCP_069
             }
         }
 
-        private void OnLeave(LeftEventArgs ev)
+        private void OnLeave(DestroyingEventArgs ev)
         {
             try 
             {
@@ -147,7 +147,12 @@ namespace Scp069.SCP_069
         {
             if (ev.Scp049 != player)
                 return;
+            if(ev.Scp049.AdrenalineHealth > 1)
+            {
+                ev.Scp049.AdrenalineHealth = 0;
 
+            }
+               
             ev.IsAllowed = false;
         }
 

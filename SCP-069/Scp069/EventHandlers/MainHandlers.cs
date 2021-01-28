@@ -43,7 +43,7 @@ namespace Scp069.EventHandlers
             }
         }
 
-        public void JoinMessage(JoinedEventArgs ev)
+        public void JoinMessage(VerifiedEventArgs ev)
         {
             if (cloneGuy != null)
             {
