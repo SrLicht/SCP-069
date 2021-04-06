@@ -14,6 +14,8 @@ namespace Scp069.System
         [Description("True to disable the ASCII logo on the console, in case one should bother you")]
         public bool NotLogo { get; set; } = false;
         #region SCP-069
+        [Description("Determines if SCP-069 victims should leave bodies upon killing someone")]
+        public bool spawnVictimsRagdolls { get; set; } = false;
         [Description("SCP-069 took damage every X seconds. (X being the number specified below)")]
         public float ClonerDamageEvery { get; set; } = 10;
         [Description("For every second that passes, the damage increases by the amount you put here")]

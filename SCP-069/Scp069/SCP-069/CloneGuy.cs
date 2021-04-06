@@ -56,14 +56,14 @@ namespace Scp069.SCP_069
             }
         }
 
-        private void Start() 
+        private void Start()
         {
-            try 
+            try
             {
-                if(player == null)
+                if (player == null)
                     player = Player.Get(gameObject);
 
-                if(MainHandlers.cloneGuy != null) 
+                if (MainHandlers.cloneGuy != null)
                 {
                     Destroy(this);
                     return;
@@ -78,15 +78,17 @@ namespace Scp069.SCP_069
                 player.MaxHealth = Plugin.Instance.Config.ClonerMaxHealth;
                 player.ClearBroadcasts();
                 player.Broadcast(Plugin.Instance.Config.SpawnBroadcastDuration, Plugin.Instance.Config.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.ClonerLifesteal.ToString()));
-            } catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 Log.Error("Start Method: " + e.ToString());
             }
         }
 
-        private void OnDestroy() 
+        private void OnDestroy()
         {
-            try {
+            try
+            {
                 Log.Info("096 Component Destroyed");
                 PlayerEvents.Dying -= OnKill;
                 PlayerEvents.Dying -= OnDeath;
@@ -98,7 +100,8 @@ namespace Scp069.SCP_069
                 MainHandlers.cloneGuy = null;
 
                 Timing.KillCoroutines(enableDamage);
-            } catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 Log.Error("OnDestroy Method: " + e.ToString());
             }
@@ -106,11 +109,12 @@ namespace Scp069.SCP_069
 
         private void OnLeave(DestroyingEventArgs ev)
         {
-            try 
+            try
             {
-                if(ev.Player == player)
+                if (ev.Player == player)
                     Destroy(this);
-            } catch(Exception e) 
+            }
+            catch (Exception e)
             {
                 Log.Error("OnLeave Method: " + e.ToString());
             }
@@ -137,7 +141,8 @@ namespace Scp069.SCP_069
             }
         }
 
-        private IEnumerator<float> EnableDamage(float seconds) {
+        private IEnumerator<float> EnableDamage(float seconds)
+        {
             damageEnabled = false;
             yield return Timing.WaitForSeconds(seconds);
             damageEnabled = true;
@@ -209,17 +214,20 @@ namespace Scp069.SCP_069
                 {
                     if (p.Side == Side.Scp) continue;
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
+                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) =>
+                    {
                         targetwriter.WritePackedUInt64(16UL);
                         targetwriter.WriteSByte((sbyte)MainHandlers.cloneGuyRole);
                     });
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) => {
+                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) =>
+                    {
                         targetwriter.WritePackedUInt64(1UL);
                         targetwriter.WriteString(ev.Target.Nickname);
                     });
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory), (targetwriter) => {
+                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory), (targetwriter) =>
+                    {
                         targetwriter.WritePackedUInt64(1UL);
                         targetwriter.WriteSByte((sbyte)t);
                     });
@@ -228,6 +236,17 @@ namespace Scp069.SCP_069
             catch (Exception e)
             {
                 Log.Error("OnKill Method: " + e.ToString());
+            }
+        }
+
+        private void OnSpawnRag(SpawningRagdollEventArgs ev)
+        {
+            if (!Plugin.Instance.Config.spawnVictimsRagdolls)
+            {
+                if (ev.Killer == player)
+                {
+                    ev.IsAllowed = false;
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Scp069.System
         public static Plugin Instance;
 
         MainHandlers handler;
+        public override Version RequiredExiledVersion => new Version(2,8,0);
         public override string Author { get; } = "SrLicht & Beryl";
 
         public override void OnEnabled()
