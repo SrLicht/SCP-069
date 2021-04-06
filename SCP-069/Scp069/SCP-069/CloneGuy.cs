@@ -48,6 +48,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.Dying += OnDeath;
                 PlayerEvents.ChangingRole += OnRoleChange;
                 PlayerEvents.Destroying += OnLeave;
+                PlayerEvents.SpawningRagdoll += OnSpawnRag;
                 Scp049.StartingRecall += OnRecall;
             }
             catch (Exception e)
@@ -94,6 +95,7 @@ namespace Scp069.SCP_069
                 PlayerEvents.Dying -= OnDeath;
                 PlayerEvents.ChangingRole -= OnRoleChange;
                 PlayerEvents.Destroying -= OnLeave;
+                PlayerEvents.SpawningRagdoll -= OnSpawnRag;
                 Scp049.StartingRecall -= OnRecall;
                 player.CustomInfo = $"";
 
