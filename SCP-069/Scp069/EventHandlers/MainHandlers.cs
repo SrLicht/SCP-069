@@ -20,10 +20,10 @@ namespace Scp069.EventHandlers
         Plugin plugin = Plugin.Instance;
 
         /// <summary>
-        /// Can be null
+        /// SCP-069 Players
         /// </summary>
-        public static Player cloneGuy = null;
-        public static RoleType cloneGuyRole = RoleType.Scp049;
+        public static List<Player> cloneGuy;
+        
 
         public void OnRACommand(SendingRemoteAdminCommandEventArgs ev)
         {
@@ -43,15 +43,17 @@ namespace Scp069.EventHandlers
             }
         }
 
-        public void JoinMessage(VerifiedEventArgs ev)
+        public void OnVerify(VerifiedEventArgs ev)
         {
             if (cloneGuy != null)
             {
-                ev.Player.ReferenceHub.SendCustomSyncVar(cloneGuy.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) =>
+                foreach(Player ply in cloneGuy)
                 {
-                    targetwriter.WritePackedUInt64(16UL);
-                    targetwriter.WriteSByte((sbyte)cloneGuyRole);
-                });
+                    ply.ReferenceHub.SendCustomSyncVar(ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
+                        targetwriter.WritePackedUInt64(16UL);
+                        targetwriter.WriteSByte((sbyte)RoleType.Scp049);
+                    });
+                }
             }
         }
 
@@ -90,8 +92,7 @@ namespace Scp069.EventHandlers
 
         public void RoundEnd(RoundEndedEventArgs ev)
         {
-            cloneGuy = null;
-            cloneGuyRole = RoleType.Scp049;
+            cloneGuy.Clear();
         }
 
     }

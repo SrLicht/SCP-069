@@ -33,7 +33,7 @@ namespace Scp069.System
                 Server.RoundStarted += handler.RoundStart;
                 Server.SendingRemoteAdminCommand += handler.OnRACommand;
 
-                Player.Verified += handler.JoinMessage;
+                Player.Verified += handler.OnVerify;
 
                 Log.Info("Plugin loaded correctly!");
 
@@ -79,7 +79,7 @@ namespace Scp069.System
             Server.RoundStarted -= handler.RoundStart;
             Server.SendingRemoteAdminCommand -= handler.OnRACommand;
 
-            Player.Verified -= handler.JoinMessage;
+            Player.Verified -= handler.OnVerify;
 
             //Handlers
 

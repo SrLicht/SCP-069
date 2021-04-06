@@ -22,6 +22,7 @@ namespace Scp069.SCP_069
         private float damageTimer, damageDealt = 0;
         private CoroutineHandle enableDamage;
         private bool damageEnabled = false;
+        private RoleType cloneGuyRole;
 
         private void Update()
         {
@@ -64,15 +65,9 @@ namespace Scp069.SCP_069
                 if (player == null)
                     player = Player.Get(gameObject);
 
-                if (MainHandlers.cloneGuy != null)
-                {
-                    Destroy(this);
-                    return;
-                }
-
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
 
-                MainHandlers.cloneGuy = player;
+                MainHandlers.cloneGuy.Add(player);
                 player.CustomInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
 
                 player.Health = Plugin.Instance.Config.ClonerHealth;
@@ -99,7 +94,7 @@ namespace Scp069.SCP_069
                 Scp049.StartingRecall -= OnRecall;
                 player.CustomInfo = $"";
 
-                MainHandlers.cloneGuy = null;
+                MainHandlers.cloneGuy.Remove(player);
 
                 Timing.KillCoroutines(enableDamage);
             }
@@ -203,9 +198,9 @@ namespace Scp069.SCP_069
                     ev.Killer.Health = Plugin.Instance.Config.ClonerMaxHealth;
                 }
                 damageDealt = 10;
-                MainHandlers.cloneGuyRole = ev.Target.Role;
+                cloneGuyRole = ev.Target.Role;
 
-                if (Plugin.Instance.Config.BroadcastDuration > 0 && ev.Target != MainHandlers.cloneGuy)
+                if (Plugin.Instance.Config.BroadcastDuration > 0 && !MainHandlers.cloneGuy.Contains(ev.Target))
                 {
                     ev.Target.ClearBroadcasts();
                     ev.Target.Broadcast(Plugin.Instance.Config.BroadcastDuration, Plugin.Instance.Config.Killbroadcast);
@@ -219,7 +214,7 @@ namespace Scp069.SCP_069
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) =>
                     {
                         targetwriter.WritePackedUInt64(16UL);
-                        targetwriter.WriteSByte((sbyte)MainHandlers.cloneGuyRole);
+                        targetwriter.WriteSByte((sbyte)cloneGuyRole);
                     });
 
                     p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) =>
