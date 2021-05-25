@@ -12,6 +12,7 @@ using Scp069.System;
 using Scp069.EventHandlers;
 using MEC;
 using System.Collections.Generic;
+using Exiled.API.Extensions;
 
 namespace Scp069.SCP_069
 {
@@ -46,6 +47,7 @@ namespace Scp069.SCP_069
                 }
 
                 PlayerEvents.Dying += OnKill;
+                PlayerEvents.Verified += OnVerify;
                 PlayerEvents.Dying += OnDeath;
                 PlayerEvents.ChangingRole += OnRoleChange;
                 PlayerEvents.Destroying += OnLeave;
@@ -85,14 +87,15 @@ namespace Scp069.SCP_069
         {
             try
             {
-                Log.Info("096 Component Destroyed");
+                Log.Info("069 Component Destroyed");
                 PlayerEvents.Dying -= OnKill;
+                PlayerEvents.Verified -= OnVerify;
                 PlayerEvents.Dying -= OnDeath;
                 PlayerEvents.ChangingRole -= OnRoleChange;
                 PlayerEvents.Destroying -= OnLeave;
                 PlayerEvents.SpawningRagdoll -= OnSpawnRag;
                 Scp049.StartingRecall -= OnRecall;
-                player.CustomInfo = $"";
+                player.CustomInfo = string.Empty;
 
                 MainHandlers.cloneGuy.Remove(player);
 
@@ -113,7 +116,20 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnLeave Method: " + e.ToString());
+                Log.Error("OnLeave Method: " + e);
+            }
+        }
+        private void OnVerify(VerifiedEventArgs ev)
+        {
+            try
+            {
+                ev.Player.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
+                    nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
+            }
+            catch (Exception e)
+            {
+
+                Log.Error("OnVerify Method: " + e);
             }
         }
 
@@ -211,23 +227,16 @@ namespace Scp069.SCP_069
                 {
                     if (p.Side == Side.Scp) continue;
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) =>
-                    {
-                        targetwriter.WritePackedUInt64(16UL);
-                        targetwriter.WriteSByte((sbyte)cloneGuyRole);
-                    });
+                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
+                       nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync), (targetwriter) =>
-                    {
-                        targetwriter.WritePackedUInt64(1UL);
-                        targetwriter.WriteString(ev.Target.Nickname);
-                    });
 
-                    p.ReferenceHub.SendCustomSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory), (targetwriter) =>
-                    {
-                        targetwriter.WritePackedUInt64(1UL);
-                        targetwriter.WriteSByte((sbyte)t);
-                    });
+                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync),
+                        nameof(NicknameSync.Network_myNickSync), ev.Target.Nickname);
+
+                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory),
+                      nameof(Inventory._curItemSynced), (sbyte)t);
+                      
                 }
             }
             catch (Exception e)

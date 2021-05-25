@@ -11,7 +11,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using Scp069.System;
 using Scp069.SCP_069;
-using CommandSystem;
+using Exiled.API.Extensions;
 
 namespace Scp069.EventHandlers
 {
@@ -23,25 +23,7 @@ namespace Scp069.EventHandlers
         /// SCP-069 Players
         /// </summary>
         public static List<Player> cloneGuy;
-        
-
-        public void OnRACommand(SendingRemoteAdminCommandEventArgs ev)
-        {
-            try
-            {
-                if (ev.Name.Equals("069", StringComparison.OrdinalIgnoreCase))
-                {
-                    ev.Sender.SetRole(RoleType.Scp049);
-                    Timing.CallDelayed(1f, () => ev.Sender.GameObject.AddComponent<CloneGuy>());
-                    ev.ReplyMessage = "You've become SCP-069.";
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error("OnRACommand Method: " + e.ToString());
-            }
-        }
+       
 
         public void OnVerify(VerifiedEventArgs ev)
         {
@@ -49,10 +31,7 @@ namespace Scp069.EventHandlers
             {
                 foreach(Player ply in cloneGuy)
                 {
-                    ply.ReferenceHub.SendCustomSyncVar(ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), (targetwriter) => {
-                        targetwriter.WritePackedUInt64(16UL);
-                        targetwriter.WriteSByte((sbyte)RoleType.Scp049);
-                    });
+                    ply.ChangeAppearance(RoleType.Scp049);
                 }
             }
         }
