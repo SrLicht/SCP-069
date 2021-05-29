@@ -56,7 +56,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("Awake Method: " + e.ToString());
+                Log.Error("Awake Method: " + e);
             }
         }
 
@@ -70,6 +70,7 @@ namespace Scp069.SCP_069
                 enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
 
                 MainHandlers.cloneGuy.Add(player);
+                Log.Debug($"{player.Nickname} It was added to cloneGuy's list", Plugin.Instance.Config.Debug);
                 player.CustomInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
 
                 player.Health = Plugin.Instance.Config.ClonerHealth;
@@ -79,7 +80,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("Start Method: " + e.ToString());
+                Log.Error("Start Method: " + e);
             }
         }
 
@@ -99,11 +100,13 @@ namespace Scp069.SCP_069
 
                 MainHandlers.cloneGuy.Remove(player);
 
+                Log.Debug($"{player.Nickname} It was removed from CloneGuy list.", Plugin.Instance.Config.Debug);
+
                 Timing.KillCoroutines(enableDamage);
             }
             catch (Exception e)
             {
-                Log.Error("OnDestroy Method: " + e.ToString());
+                Log.Error("OnDestroy Method: " + e);
             }
         }
 
@@ -112,7 +115,9 @@ namespace Scp069.SCP_069
             try
             {
                 if (ev.Player == player)
+                {
                     Destroy(this);
+                }
             }
             catch (Exception e)
             {
@@ -121,16 +126,10 @@ namespace Scp069.SCP_069
         }
         private void OnVerify(VerifiedEventArgs ev)
         {
-            try
-            {
-                ev.Player.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
-                    nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
-            }
-            catch (Exception e)
-            {
 
-                Log.Error("OnVerify Method: " + e);
-            }
+            ev.Player.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
+                nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
+            Log.Debug($"{ev.Player.Nickname} knows the current form of SCP-069",Plugin.Instance.Config.Debug);
         }
 
         private void OnRoleChange(ChangingRoleEventArgs ev)
@@ -150,7 +149,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnRoleChange Method: " + e.ToString());
+                Log.Error("OnRoleChange Method: " + e);
             }
         }
 
@@ -182,67 +181,65 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnDeath Method: " + e.ToString());
+                Log.Error("OnDeath Method: " + e);
             }
         }
 
         private void OnKill(DyingEventArgs ev)
         {
-            try
+
+            if (ev.Killer != player || ev.Target == player)
+                return;
+
+            enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
+
+            if (ev.Killer.Scale != ev.Target.Scale)
             {
-                if (ev.Killer != player || ev.Target == player)
-                    return;
-
-                enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
-
                 ev.Killer.Scale = ev.Target.Scale;
-
-                ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
-
-                ItemType t = ItemType.None;
-                if (ev.Target.CurrentItem != null)
-                {
-                    t = ev.Target.CurrentItem.id;
-                }
-
-                ev.Target.ClearInventory();
-
-                ev.Killer.Health += Plugin.Instance.Config.ClonerLifesteal;
-
-                if (ev.Killer.Health > Plugin.Instance.Config.ClonerMaxHealth)
-                {
-                    ev.Killer.Health = Plugin.Instance.Config.ClonerMaxHealth;
-                }
-                damageDealt = 10;
-                cloneGuyRole = ev.Target.Role;
-
-                if (Plugin.Instance.Config.BroadcastDuration > 0 && !MainHandlers.cloneGuy.Contains(ev.Target))
-                {
-                    ev.Target.ClearBroadcasts();
-                    ev.Target.Broadcast(Plugin.Instance.Config.BroadcastDuration, Plugin.Instance.Config.Killbroadcast);
-
-                }
-
-                foreach (Player p in Player.List)
-                {
-                    if (p.Side == Side.Scp) continue;
-
-                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
-                       nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
-
-
-                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync),
-                        nameof(NicknameSync.Network_myNickSync), ev.Target.Nickname);
-
-                    p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory),
-                      nameof(Inventory._curItemSynced), (sbyte)t);
-                      
-                }
             }
-            catch (Exception e)
+
+            ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
+
+            ItemType t = ItemType.None;
+            if (ev.Target.CurrentItem != null)
             {
-                Log.Error("OnKill Method: " + e.ToString());
+                t = ev.Target.CurrentItem.id;
             }
+
+            ev.Target.ClearInventory();
+
+            ev.Killer.Health += Plugin.Instance.Config.ClonerLifesteal;
+
+            if (ev.Killer.Health > Plugin.Instance.Config.ClonerMaxHealth)
+            {
+                ev.Killer.Health = Plugin.Instance.Config.ClonerMaxHealth;
+            }
+            damageDealt = 10;
+            cloneGuyRole = ev.Target.Role;
+
+            if (Plugin.Instance.Config.BroadcastDuration > 0 && !MainHandlers.cloneGuy.Contains(ev.Target))
+            {
+                ev.Target.ClearBroadcasts();
+                ev.Target.Broadcast(Plugin.Instance.Config.BroadcastDuration, Plugin.Instance.Config.Killbroadcast);
+
+            }
+
+            foreach (Player p in Player.List)
+            {
+                if (p.Side == Side.Scp) continue;
+
+                p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
+                   nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
+
+
+                p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(NicknameSync),
+                    nameof(NicknameSync.Network_myNickSync), ev.Target.Nickname);
+
+                p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(Inventory),
+                  nameof(Inventory._curItemSynced), (sbyte)t);
+
+            }
+
         }
 
         private void OnSpawnRag(SpawningRagdollEventArgs ev)

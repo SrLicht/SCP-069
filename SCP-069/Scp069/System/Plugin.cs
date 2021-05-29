@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Exiled.API.Features;
 using Scp069.EventHandlers;
-using Exiled.Events.EventArgs;
 
 namespace Scp069.System
 {
@@ -32,11 +27,7 @@ namespace Scp069.System
 
                 Server.RoundEnded += handler.RoundEnd;
                 Server.RoundStarted += handler.RoundStart;
-                Server.SendingRemoteAdminCommand += handler.OnRACommand;
-
                 Player.Verified += handler.OnVerify;
-
-                Log.Info("Plugin loaded correctly!");
 
                 #region Logo
 
@@ -59,18 +50,13 @@ namespace Scp069.System
                 }
                 #endregion
 
+                base.OnEnabled();
             }
             catch (Exception e)
             {
-                Log.Error("Problem loading plugin: " + e.StackTrace + "" + e.Message);
+                Log.Error("Problem loading plugin: " + e);
             }
 
-        }
-
-
-        public override void OnReloaded()
-        {
-            // Get uwu'd lolol
         }
 
         public override void OnDisabled()
@@ -78,13 +64,10 @@ namespace Scp069.System
 
             Server.RoundEnded -= handler.RoundEnd;
             Server.RoundStarted -= handler.RoundStart;
-            Server.SendingRemoteAdminCommand -= handler.OnRACommand;
-
             Player.Verified -= handler.OnVerify;
-
-            //Handlers
-
             handler = null;
+            Instance = null;
+            base.OnDisabled();
 
         }
     }

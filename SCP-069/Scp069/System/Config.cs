@@ -1,10 +1,5 @@
 ﻿using Exiled.API.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scp069.System
 {
@@ -13,6 +8,8 @@ namespace Scp069.System
         public bool IsEnabled { get; set; } = true;
         [Description("True to disable the ASCII logo on the console, in case one should bother you")]
         public bool NotLogo { get; set; } = false;
+        [Description("Show some Logs.Debug, you should turn this on if something doesn't work properly.")]
+        public bool Debug { get; set; } = false;
         #region SCP-069
         [Description("Determines if SCP-069 victims should leave bodies upon killing someone")]
         public bool spawnVictimsRagdolls { get; set; } = false;
