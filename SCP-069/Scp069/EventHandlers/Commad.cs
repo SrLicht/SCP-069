@@ -49,7 +49,7 @@ namespace Scp069.EventHandlers
             catch (Exception e)
             {
 
-                Log.Error("SCP-069 Command Error: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
                 response = "Error: " + e;
                 return false;
             }
