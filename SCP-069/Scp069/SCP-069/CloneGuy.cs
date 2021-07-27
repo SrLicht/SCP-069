@@ -23,15 +23,15 @@ namespace Scp069.SCP_069
         private float damageTimer, damageDealt = 0;
         private CoroutineHandle enableDamage;
         private bool damageEnabled = false;
-        private RoleType cloneGuyRole;
+        public static RoleType cloneGuyRole;
 
         private void Update()
         {
             if (damageEnabled && damageTimer <= Time.time)
             {
                 player.Hurt(damageDealt, DamageTypes.RagdollLess, "SCP-069");
-                damageDealt += Plugin.Instance.Config.ClonerIncreaseDamageBy;
-                damageTimer = Time.time + Plugin.Instance.Config.ClonerDamageEvery;
+                damageDealt += Plugin.Instance.Config.Scp069.ClonerIncreaseDamageBy;
+                damageTimer = Time.time + Plugin.Instance.Config.Scp069.ClonerDamageEvery;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Scp069.SCP_069
                 {
                     player.SetRole(RoleType.Scp049);
                 }
-
+                cloneGuyRole = RoleType.Scp049;
                 PlayerEvents.Dying += OnKill;
                 PlayerEvents.Verified += OnVerify;
                 PlayerEvents.Dying += OnDeath;
@@ -56,7 +56,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("Awake Method: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -67,20 +67,20 @@ namespace Scp069.SCP_069
                 if (player == null)
                     player = Player.Get(gameObject);
 
-                enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodStart));
+                enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.Scp069.GracePeriodStart));
 
                 MainHandlers.cloneGuy.Add(player);
                 Log.Debug($"{player.Nickname} It was added to cloneGuy's list", Plugin.Instance.Config.Debug);
                 player.CustomInfo = $"<color=#E7205C>{player.DisplayNickname}</color>\n<b><color=red>SCP-069</color></b>";
 
-                player.Health = Plugin.Instance.Config.ClonerHealth;
-                player.MaxHealth = Plugin.Instance.Config.ClonerMaxHealth;
+                player.Health = Plugin.Instance.Config.Scp069.ClonerHealth;
+                player.MaxHealth = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
                 player.ClearBroadcasts();
-                player.Broadcast(Plugin.Instance.Config.SpawnBroadcastDuration, Plugin.Instance.Config.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.ClonerLifesteal.ToString()));
+                player.Broadcast(Plugin.Instance.Config.Scp069.SpawnBroadcastDuration, Plugin.Instance.Config.Scp069.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.Scp069.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.Scp069.ClonerLifesteal.ToString()));
             }
             catch (Exception e)
             {
-                Log.Error("Start Method: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -106,30 +106,22 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnDestroy Method: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 
         private void OnLeave(DestroyingEventArgs ev)
         {
-            try
+            if (ev.Player == player)
             {
-                if (ev.Player == player)
-                {
-                    Destroy(this);
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error("OnLeave Method: " + e);
+                Destroy(this);
             }
         }
         private void OnVerify(VerifiedEventArgs ev)
         {
-
             ev.Player.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
                 nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
-            Log.Debug($"{ev.Player.Nickname} knows the current form of SCP-069",Plugin.Instance.Config.Debug);
+            Log.Debug($"{ev.Player.Nickname} knows the current form of SCP-069", Plugin.Instance.Config.Debug);
         }
 
         private void OnRoleChange(ChangingRoleEventArgs ev)
@@ -149,7 +141,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnRoleChange Method: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -181,7 +173,7 @@ namespace Scp069.SCP_069
             }
             catch (Exception e)
             {
-                Log.Error("OnDeath Method: " + e);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -191,7 +183,7 @@ namespace Scp069.SCP_069
             if (ev.Killer != player || ev.Target == player)
                 return;
 
-            enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.GracePeriodOnKill));
+            enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.Scp069.GracePeriodOnKill));
 
             if (ev.Killer.Scale != ev.Target.Scale)
             {
@@ -201,32 +193,32 @@ namespace Scp069.SCP_069
             ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
 
             ItemType t = ItemType.None;
-            if (ev.Target.CurrentItem != null)
+            if (ev.Target.CurrentItem != null && ev.Target.CufferId != -1)
             {
                 t = ev.Target.CurrentItem.id;
             }
 
             ev.Target.ClearInventory();
 
-            ev.Killer.Health += Plugin.Instance.Config.ClonerLifesteal;
+            ev.Killer.Health += Plugin.Instance.Config.Scp069.ClonerLifesteal;
 
-            if (ev.Killer.Health > Plugin.Instance.Config.ClonerMaxHealth)
+            if (ev.Killer.Health > Plugin.Instance.Config.Scp069.ClonerMaxHealth)
             {
-                ev.Killer.Health = Plugin.Instance.Config.ClonerMaxHealth;
+                ev.Killer.Health = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
             }
             damageDealt = 10;
             cloneGuyRole = ev.Target.Role;
 
-            if (Plugin.Instance.Config.BroadcastDuration > 0 && !MainHandlers.cloneGuy.Contains(ev.Target))
+            if (Plugin.Instance.Config.Scp069.BroadcastDuration > 0 && !MainHandlers.cloneGuy.Contains(ev.Target))
             {
                 ev.Target.ClearBroadcasts();
-                ev.Target.Broadcast(Plugin.Instance.Config.BroadcastDuration, Plugin.Instance.Config.Killbroadcast);
+                ev.Target.Broadcast(Plugin.Instance.Config.Scp069.BroadcastDuration, Plugin.Instance.Config.Scp069.Killbroadcast);
 
             }
 
             foreach (Player p in Player.List)
             {
-                if (p.Side == Side.Scp) continue;
+                if (p.IsScp) continue;
 
                 p.SendFakeSyncVar(ev.Killer.ReferenceHub.networkIdentity, typeof(CharacterClassManager),
                    nameof(CharacterClassManager.NetworkCurClass), (sbyte)cloneGuyRole);
@@ -244,7 +236,7 @@ namespace Scp069.SCP_069
 
         private void OnSpawnRag(SpawningRagdollEventArgs ev)
         {
-            if (!Plugin.Instance.Config.spawnVictimsRagdolls)
+            if (!Plugin.Instance.Config.Scp069.spawnVictimsRagdolls)
             {
                 if (ev.Killer == player)
                 {
