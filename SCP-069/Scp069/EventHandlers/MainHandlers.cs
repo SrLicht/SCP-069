@@ -12,29 +12,31 @@ using System.Threading.Tasks;
 using Scp069.System;
 using Scp069.SCP_069;
 using Exiled.API.Extensions;
+using Random = System.Random;
 
 namespace Scp069.EventHandlers
 {
     public class MainHandlers
     {
         Plugin plugin = Plugin.Instance;
-
+        Random random;
         /// <summary>
         /// SCP-069 Players
         /// </summary>
-        public static List<Player> cloneGuy;
-       
+        public static List<Player> cloneGuy = new List<Player>();
 
-        public void OnVerify(VerifiedEventArgs ev)
+
+        // I do not remember if this is really necessary, so for now I leave it like that and if I see any bug I will put it back.
+        /*public void OnVerify(VerifiedEventArgs ev)
         {
             if (cloneGuy != null)
             {
                 foreach(Player ply in cloneGuy)
                 {
-                    ply.ChangeAppearance(RoleType.Scp049);
+                    ply.ChangeAppearance(CloneGuy.cloneGuyRole);
                 }
             }
-        }
+        }*/
 
         public void RoundStart()
         {
@@ -42,19 +44,17 @@ namespace Scp069.EventHandlers
             {
                 Timing.CallDelayed(1f, () => {
                     var list = Player.Get(RoleType.ClassD).ToList();
+                    if (list.Count == 0 || list.Count() < plugin.Config.Scp069.ClonerRatsNeeded) return;
 
-                    if (UnityEngine.Random.Range(1, 101) <= plugin.Config.ClonerChance
-                     && list.Count() >= plugin.Config.ClonerRatsNeeded)
+                    if (UnityEngine.Random.Range(1, 101) <= plugin.Config.Scp069.ClonerChance)
                     {
-
-                        list.Shuffle();
-
-                        Player player = list.FirstOrDefault();
+                        Player player = list[random.Next(list.Count())];
 
                         if (player == null)
                             return;
 
                         player.SetRole(RoleType.Scp049);
+                        // The delay is necessary
                         Timing.CallDelayed(1.5f, () =>
                         {
                             player.GameObject.AddComponent<CloneGuy>();
