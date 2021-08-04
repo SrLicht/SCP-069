@@ -167,7 +167,10 @@ namespace Scp069.Component
                 playerEffect.Intensity = Plugin.Instance.Config.Scp069.movementSpeedIntesify;
             }
             // Adding victim to the list.
-            Handlers.MainHandler.victims.Add(ev.Target);
+            if (!Handlers.MainHandler.victims.Contains(ev.Target))
+            {
+                Handlers.MainHandler.victims.Add(ev.Target);
+            }
         }
         private void OnHurting(HurtingEventArgs ev)
         {

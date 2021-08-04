@@ -25,12 +25,14 @@ namespace Scp069.Handlers
         {
             Exiled.Events.Handlers.Server.RoundEnded += RoundEnd;
             Exiled.Events.Handlers.Server.RoundStarted += RoundStart;
+            Exiled.Events.Handlers.Player.ChangingRole += ChanginRole;
         }
 
         public override void Stop()
         {
-            Exiled.Events.Handlers.Server.RoundEnded += RoundEnd;
-            Exiled.Events.Handlers.Server.RoundStarted += RoundStart;
+            Exiled.Events.Handlers.Server.RoundEnded -= RoundEnd;
+            Exiled.Events.Handlers.Server.RoundStarted -= RoundStart;
+            Exiled.Events.Handlers.Player.ChangingRole -= ChanginRole;
             foreach (Player plys in scp069Players)
             {
                 if (plys.GameObject.TryGetComponent<Component.SCP_069_Component>(out var comp))
@@ -53,12 +55,17 @@ namespace Scp069.Handlers
                 }
             }
         }*/
-
+        public void ChanginRole(ChangingRoleEventArgs ev)
+        {
+            if(victims.Contains(ev.Player) && ev.NewRole != RoleType.Spectator)
+            {
+                victims.Remove(ev.Player);
+            }
+        }
         public void RoundStart()
         {
             try
             {
-                
                 Timing.CallDelayed(1f, () => {
                     var list = Player.Get(RoleType.ClassD).ToList();
                     if (list.Count == 0 || list.Count() < plugin.Config.Scp069.ClonerRatsNeeded) return;
