@@ -14,7 +14,7 @@ namespace Scp069.EventHandlers
 
         public string[] Aliases => new string[] { };
 
-        public string Description => "<color=red> Test SCP-069 on you</color>";
+        public string Description => "<color=red>SCP-069 base command</color>";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
@@ -67,8 +67,17 @@ namespace Scp069.EventHandlers
                                     try
                                     {
                                         Player plytoremove = Player.Get(arguments.At(1));
-                                        plytoremove.GameObject.TryGetComponent<Component.SCP_069_Component>(out var component);
-                                        component.Destroy();
+                                        try
+                                        {
+                                            plytoremove.GameObject.TryGetComponent<Component.SCP_069_Component>(out var component);
+                                            component.Destroy();
+                                        }
+                                        catch (Exception)
+                                        {
+
+                                            response = $"\nThe player is not SCP-069";
+                                            return false;
+                                        }
                                         response = $"\nRemoving SCP-069 to {plytoremove.Nickname}";
                                         return true;
                                     }
@@ -81,8 +90,16 @@ namespace Scp069.EventHandlers
                                 else
                                 {
                                     Player plySender = Player.Get((sender as CommandSender).SenderId);
-                                    plySender.GameObject.TryGetComponent<Component.SCP_069_Component>(out var component);
-                                    component.Destroy();
+                                    try
+                                    {
+                                        plySender.GameObject.TryGetComponent<Component.SCP_069_Component>(out var component);
+                                        component.Destroy();
+                                    }
+                                    catch (Exception)
+                                    {
+                                        response = $"\nThe player is not SCP-069";
+                                        return false;
+                                    };
                                     response = $"\nRemoving you the SCP-069.";
                                     return true;
                                 }
@@ -122,10 +139,17 @@ namespace Scp069.EventHandlers
         }
         private string AllScps069()
         {
-            string msg = "\nList of SCP-069\n";
-            foreach (Player ply in Handlers.MainHandler.scp069Players)
+            string msg = "\nList of SCP-069\n|--ID--|--Nickname--|\n";
+            if (Handlers.MainHandler.scp069Players.Count > 0)
             {
-                msg += $"{ply.Id} - {ply.Nickname} is SCP-069\n";
+                foreach (Player ply in Handlers.MainHandler.scp069Players)
+                {
+                    msg += $"{ply.Id} - {ply.Nickname} is SCP-069\n";
+                }
+            }
+            else
+            {
+                msg = "\nThere is no SCP-069 in this round.";
             }
             return msg;
         }
