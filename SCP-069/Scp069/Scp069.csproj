@@ -87,10 +87,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\Commad.cs" />
-    <Compile Include="EventHandlers\MainHandlers.cs" />
-    <Compile Include="SCP-069\CloneGuy.cs" />
+    <Compile Include="Base\Handlers.cs" />
+    <Compile Include="Component\SCP-069-Component.cs" />
+    <Compile Include="Handlers\Commad.cs" />
+    <Compile Include="Handlers\MainHandler.cs" />
     <Compile Include="System\Config.cs" />
+    <Compile Include="System\Extension.cs" />
     <Compile Include="System\Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Scp069Config.cs" />
@@ -99,5 +101,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
