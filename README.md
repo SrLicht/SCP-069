@@ -12,9 +12,9 @@ SCP-069 is a new playable SCP, which will play out the same as SCP-049 without t
 | `069 help`   | Returns a list of available 069 commands. |
 | `069 list`   | It gives you a list of players who are SCP-069 if any. |
 | `069 give`   | Give SCP-069 to whoever is using the command. |
-| `069 give [PlayerName/PlayerID]`ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ| It gives the specified player the SCP-069, there can be more than 1 SCP-069 the plugin is prepared for that situation, but remember that it can affect a little bit the performance and experience of the other players. **PlayerID refers to the temporary ID given to the player per game, not the SteamID or DiscordID.** |
+| `069 give [PlayerName/PlayerID]`| It gives the specified player the SCP-069, there can be more than 1 SCP-069 the plugin is prepared for that situation, but remember that it can affect a little bit the performance and experience of the other players. **PlayerID refers to the temporary ID given to the player per game, not the SteamID or DiscordID.** |
 | `069 remove` | Remove SCP-069 from the player who is using the command, try not to use it if you don't have 069 in the first place. |
-| `069 remove [PlayerName/PlayerID]`ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ| Remove SCP-069 from the specified player, if it is 069 in the first place. |
+| `069 remove [PlayerName/PlayerID]`| Remove SCP-069 from the specified player, if it is 069 in the first place. |
 
 
 ### ⚙️ Configuration ⚙️
