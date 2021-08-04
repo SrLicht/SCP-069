@@ -11,6 +11,12 @@ namespace Scp069.System
     {
         [Description("Determines if SCP-069 victims should leave bodies upon killing someone")]
         public bool spawnVictimsRagdolls { get; set; } = false;
+        [Description("The intensity of SCP-207 that will be given to SCP-069 when killing, if the amount is 0 no movement speed will be given.")]
+        public byte movementSpeedIntesify { get; set; } = 1;
+        [Description("The duration of the movement speed to be given to SCP-069. This will be ignored if movementSpeedIntesify = 0.")]
+        public float movementSpeedDuration { get; set; } = 15f;
+        [Description("The duration of the movement speed should be accumulated ?")]
+        public bool movementSpeedShoulbeAccumulated { get; set; } = true;
         [Description("SCP-069 took damage every X seconds. (X being the number specified below)")]
         public float ClonerDamageEvery { get; set; } = 10;
         [Description("For every second that passes, the damage increases by the amount you put here")]
@@ -29,10 +35,14 @@ namespace Scp069.System
         public int ClonerMaxHealth { get; set; } = 2000;
         [Description("As it says, the amount of life that is healed by killing.")]
         public int ClonerLifesteal { get; set; } = 150;
+    }
+    public class BroadcastSetting
+    {
         [Description("If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069")]
         public ushort BroadcastDuration { get; set; } = 8;
         public string Killbroadcast { get; set; } = "<b>You were killed by <color=red>SCP-069</color></b>";
         public ushort SpawnBroadcastDuration { get; set; } = 8;
         public string SpawnBroadcast { get; set; } = "<b><size=25>You're <color=red>SCP-069</color>. When killing a human, you will steal it's shape, inventory and size. You will also receive {dmg} damage every few seconds until you find a new victim, also healing for {heal}hp on every kill.</size></b>";
     }
+
 }
