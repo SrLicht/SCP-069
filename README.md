@@ -2,7 +2,7 @@
 
 
 ### ❓What does it do?❓ 
-SCP-069 is a new playable SCP, which will play out the same as SCP-049 without the ability to respawn zombies, but when it kills its first victim, it will take it's body, size and inventory, thus almost perfectly replicating his victim. This ability can and will be used every time it kills a human, which opens up new interesting scenarios with this SCP, as well as a different way to play.
+The SCP-069 is a new and playable SCP, which adds the feeling that gave the SPY in TF1 in the first place and that is the fear of your own team, the SCP-069 can steal the Name and form of its victim, adding interesting scenarios in SCPSL.Victims can see the real name and a tag "(SCP-069)" when they are spectators.
 
 
 
