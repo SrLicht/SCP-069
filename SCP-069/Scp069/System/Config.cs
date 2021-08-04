@@ -10,6 +10,7 @@ namespace Scp069.System
         public bool NotLogo { get; set; } = false;
         [Description("Show some Logs.Debug, you should turn this on if something doesn't work properly.")]
         public bool Debug { get; set; } = false;
+        public BroadcastSetting Broadcasting { get; set; } = new BroadcastSetting();
         public Scp069Config Scp069 { get; set; } = new Scp069Config();
 
     }
