@@ -3,16 +3,31 @@ using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Exiled.API.Features;
 using Scp069.EventHandlers;
+using Scp069.Base;
+using System.Collections.Generic;
 
 namespace Scp069.System
 {
     public class Plugin : Plugin<Config>
     {
-        public static Plugin Instance;
+        #region Plugin Variables
+        private List<Base.Handler> handlers = new List<Base.Handler>();
 
-        MainHandlers handler;
-        public override Version Version => new Version(1,5,1);
-        public override Version RequiredExiledVersion => new Version(2,11,0);
+        private static readonly Plugin Singleton = new Plugin();
+        private Plugin()
+        {
+        }
+
+        public Random random;
+        #endregion
+
+        /// <summary>
+        /// Gets the only existing instance of this plugin.
+        /// </summary>
+        public static Plugin Instance => Singleton;
+
+        public override Version Version => new Version(2, 0, 0);
+        public override Version RequiredExiledVersion => new Version(2, 11, 0);
         public override string Author { get; } = "SrLicht & Beryl";
 
         public override void OnEnabled()
@@ -20,14 +35,7 @@ namespace Scp069.System
             try
             {
                 Log.Info("Initializing EventsHandler...");
-
-                Instance = this;
-
-                handler = new MainHandlers();
-
-                Server.RoundEnded += handler.RoundEnd;
-                Server.RoundStarted += handler.RoundStart;
-                //Player.Verified += handler.OnVerify;
+                RegisterEvents();
 
                 #region Logo
 
@@ -46,7 +54,7 @@ namespace Scp069.System
                     Log.Debug(" ######   ######  ##                  #####    #######   #######  ");
                     Log.Info("");
                     Log.Info("####################################################################");
-                    
+
                 }
                 #endregion
 
@@ -62,12 +70,40 @@ namespace Scp069.System
         public override void OnDisabled()
         {
 
-            Server.RoundEnded -= handler.RoundEnd;
-            Server.RoundStarted -= handler.RoundStart;
-            //Player.Verified -= handler.OnVerify;
-            handler = null;
-            Instance = null;
+            UnRegisteringEvents();
             base.OnDisabled();
+
+        }
+
+        public void RegisterEvents()
+        {
+            try
+            {
+                Log.Info("Loading MainHandler...");
+                handlers = new List<Base.Handler> { new Handlers.MainHandler() };
+                foreach (var item in handlers)
+                {
+                    item.Start();
+                }
+                Log.Info("Plugin fully loaded.");
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
+                return;
+            }
+
+        }
+        public void UnRegisteringEvents()
+        {
+            foreach (var item in handlers)
+            {
+                item.Stop();
+            }
+            Log.Info("Good bye.");
+
+            random = null;
+            handlers = null;
 
         }
     }
