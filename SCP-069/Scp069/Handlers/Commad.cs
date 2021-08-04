@@ -1,7 +1,6 @@
 ﻿using System;
 using CommandSystem;
 using Exiled.API.Features;
-using Scp069.SCP_069;
 using Scp069.System;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;

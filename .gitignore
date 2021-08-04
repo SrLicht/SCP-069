@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 SCP-069/.vs/SCP-069/v16/.suo
 SCP-069/.vs/SCP-069/v16/.suo
+SCP-069/.bin/*
