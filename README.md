@@ -37,9 +37,9 @@ The SCP-069 is a new and playable SCP, which adds the feeling that gave the SPY 
 | `grace_period_on_kill` | **15** | When SCP-069 kills someone, they will not take damage per second, for as long as you specify (In seconds obviously) |
 | `cloner_rats_needed` | **4**| The amount of Class-D required for SCP-069 to appear. |
 | `cloner_chance` | **55** | The probability that SCP-069 will appear, if the above requirement is met. |
-| `cloner_health` | **1540** | The amount of HP SCP-069 has. |
-| `cloner_max_health` | **2000** | The maximum HP that the SCP-069 can obtain when killing |
-| `cloner_max_health` | **150** | As it says, the amount of life that is healed by killing a human. |
+| `cloner_health` | **1540** | The base HP with which SCP-069 begins |
+| `cloner_max_health` | **2000** | The maximum HP that the SCP-069 can reach |
+| `cloner_lifesteal` | **150** | The amount of HP that SCP-069 receives when killing someone. |
 | `broadcast_duration` | **8** | If this setting is greater than 0, the number you set will be the duration of the broadcast you send to the victim of SCP-069. |
 | `killbroadcast` | **You were killed by SCP-069** | The message that will come out to the victim when he is killed by SCP-069. |
 | `spawn_broadcast_duration` | **8** | Spawn Broadcast Duration|
