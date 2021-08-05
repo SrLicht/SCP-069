@@ -1,9 +1,12 @@
+[![Github All Releases](https://img.shields.io/github/downloads/SrLicht/SCP-069/total.svg)]() [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+
+
+
 # ☣️SCP-069 ☣️
 
 
 ### ❓What does it do?❓ 
 The SCP-069 is a new and playable SCP, which adds the feeling that gave the SPY in TF1 in the first place and that is the fear of your own team, the SCP-069 can steal the Name and form of its victim, adding interesting scenarios in SCPSL.Victims can see the real name and a tag "(SCP-069)" when they are spectators.
-
 
 
 ### 📜Commands📜
