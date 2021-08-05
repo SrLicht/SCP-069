@@ -232,7 +232,7 @@ namespace Scp069.Component
             {
                 foreach (Player player in Handlers.MainHandler.victims)
                 {
-                    Timing.CallDelayed(0.5f, () => player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(NicknameSync), nameof(NicknameSync.Network_displayName), $"{nicktodisplay} (SCP-069)"));
+                    Timing.CallDelayed(0.5f, () => player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(NicknameSync), nameof(NicknameSync.Network_displayName), $"{nicktodisplay} ({scp069.Nickname} - SCP-069)"));
                 }
             }
             catch (Exception e)
