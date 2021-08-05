@@ -22,7 +22,7 @@ namespace Scp069.Component
         private float damageTimer, damageDeal = 0;
         private bool damageEnable = false;
         private CoroutineHandle enableDamage;
-        public static RoleType scp069roletype;
+        public RoleType scp069roletype;
         private void Awake()
         {
             RegisteringEvents();
