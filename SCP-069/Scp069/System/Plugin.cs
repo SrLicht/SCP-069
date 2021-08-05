@@ -1,47 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Server = Exiled.Events.Handlers.Server;
 using Player = Exiled.Events.Handlers.Player;
 using Exiled.API.Features;
 using Scp069.EventHandlers;
-using Exiled.Events.EventArgs;
+using Scp069.Base;
+using System.Collections.Generic;
 
 namespace Scp069.System
 {
     public class Plugin : Plugin<Config>
     {
-        public static Plugin Instance;
+        #region Plugin Variables
+        private List<Base.Handler> handlers = new List<Base.Handler>();
 
-        MainHandlers handler;
+        private static readonly Plugin Singleton = new Plugin();
+        private Plugin()
+        {
+        }
+
+        public Random random;
+        #endregion
+
+        /// <summary>
+        /// Gets the only existing instance of this plugin.
+        /// </summary>
+        public static Plugin Instance => Singleton;
+
+        public override Version Version => new Version(2, 0, 2);
+        public override Version RequiredExiledVersion => new Version(2, 11, 0);
         public override string Author { get; } = "SrLicht & Beryl";
 
         public override void OnEnabled()
         {
             try
             {
-                Log.Debug("Initializing EventsHandler...");
-
-                Instance = this;
-
-                handler = new MainHandlers();
-
-                Server.RoundEnded += handler.RoundEnd;
-                Server.RoundStarted += handler.RoundStart;
-                Server.SendingRemoteAdminCommand += handler.OnRACommand;
-
-                Player.Verified += handler.JoinMessage;
-
-                Log.Info("Plugin loaded correctly!");
+                Log.Info("Initializing EventsHandler...");
+                RegisterEvents();
 
                 #region Logo
 
                 if (!Config.NotLogo)
                 {
-                    
 
+                    // I still think it's better than the one Joker did in Exiled. Don't hit me Joker.
                     Log.Info("####################################################################");
                     Log.Info("");
                     Log.Debug(" ######   ######  ########            #####    #######   #######  ");
@@ -53,36 +54,56 @@ namespace Scp069.System
                     Log.Debug(" ######   ######  ##                  #####    #######   #######  ");
                     Log.Info("");
                     Log.Info("####################################################################");
-                    
+
                 }
                 #endregion
 
+                base.OnEnabled();
             }
             catch (Exception e)
             {
-                Log.Error("Problem loading plugin: " + e.StackTrace + "" + e.Message);
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
 
-        }
-
-
-        public override void OnReloaded()
-        {
-            // Get uwu'd lolol
         }
 
         public override void OnDisabled()
         {
 
-            Server.RoundEnded -= handler.RoundEnd;
-            Server.RoundStarted -= handler.RoundStart;
-            Server.SendingRemoteAdminCommand -= handler.OnRACommand;
+            UnRegisteringEvents();
+            base.OnDisabled();
 
-            Player.Verified -= handler.JoinMessage;
+        }
 
-            //Handlers
+        public void RegisterEvents()
+        {
+            try
+            {
+                Log.Info("Loading MainHandler...");
+                handlers = new List<Base.Handler> { new Handlers.MainHandler() };
+                foreach (var item in handlers)
+                {
+                    item.Start();
+                }
+                Log.Info("Plugin fully loaded.");
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
+                return;
+            }
 
-            handler = null;
+        }
+        public void UnRegisteringEvents()
+        {
+            foreach (var item in handlers)
+            {
+                item.Stop();
+            }
+            Log.Info("Good bye.");
+
+            random = null;
+            handlers = null;
 
         }
     }
