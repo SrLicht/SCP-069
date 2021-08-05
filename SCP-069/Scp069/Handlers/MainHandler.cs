@@ -64,6 +64,7 @@ namespace Scp069.Handlers
         }
         public void RoundStart()
         {
+            if (CerberusGamemodes.Plugin.InEvent) return;
             try
             {
                 Timing.CallDelayed(1f, () => {

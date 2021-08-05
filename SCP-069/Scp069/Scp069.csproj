@@ -41,6 +41,9 @@
     <Reference Include="Assembly-CSharp_publicized">
       <HintPath>..\..\..\..\Server\SCPSL_Data\Managed\publicized_assemblies\Assembly-CSharp_publicized.dll</HintPath>
     </Reference>
+    <Reference Include="CerberusGamemodes">
+      <HintPath>..\..\..\..\..\..\..\..\..\CerberusReferences\PluginDlls\CerberusGamemodes.dll</HintPath>
+    </Reference>
     <Reference Include="CommandSystem.Core">
       <HintPath>..\..\..\..\Server\SCPSL_Data\Managed\CommandSystem.Core.dll</HintPath>
     </Reference>
