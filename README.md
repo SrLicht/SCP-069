@@ -3,7 +3,8 @@
 
 
 # ☣️SCP-069 ☣️
-
+Any problems or suggestions can be made at https://github.com/SrLicht/SCP-069/issues.
+if you make a suggestion remember to use the suggestion label
 
 ### ❓What does it do?❓ 
 The SCP-069 is a new and playable SCP, which adds the feeling that gave the SPY in TF1 in the first place and that is the fear of your own team, the SCP-069 can steal the Name and form of its victim, adding interesting scenarios in SCPSL.Victims can see the real name and a tag "(SCP-069)" when they are spectators.
