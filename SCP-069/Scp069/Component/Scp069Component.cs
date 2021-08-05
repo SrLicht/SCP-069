@@ -19,18 +19,17 @@ namespace Scp069.Component
     public class Scp069Component : MonoBehaviour
     {
         private Player scp069;
-        private float damageTimer = Plugin.Instance.Config.Scp069.GracePeriodStart, damageDeal = 0;
+        private float damageTimer, damageDeal = 0;
         private bool damageEnable = false;
         private CoroutineHandle enableDamage;
         public static RoleType scp069roletype;
         private void Awake()
         {
-            Log.Debug($"Iniciando awake");
             RegisteringEvents();
         }
         private void Start()
         {
-            InvokeRepeating("DoDamage", 0.1f, damageTimer);
+            InvokeRepeating("DoDamage", 0.1f, 1f);
             scp069.ClearBroadcasts();
             scp069.Broadcast(Plugin.Instance.Config.Broadcasting.SpawnBroadcastDuration, Plugin.Instance.Config.Broadcasting.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.Scp069.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.Scp069.ClonerLifesteal.ToString()));
 
@@ -44,7 +43,13 @@ namespace Scp069.Component
         {
             try
             {
+                if (scp069 != null)
+                {
+                    Handlers.MainHandler.scp069Players.Remove(scp069);
+                }
+
                 Destroy(this);
+
             }
             catch (Exception e)
             {
@@ -56,7 +61,7 @@ namespace Scp069.Component
         {
             if (!(Player.Get(gameObject) is Player ply))
             {
-                Log.Error("Error Getting Player");
+                Log.Error($"{this} Error Getting Player");
                 Destroy();
                 return;
             }
@@ -75,10 +80,9 @@ namespace Scp069.Component
             PlayerEvents.Verified += OnPlayerVerify;
             PlayerEvents.Destroying += OnPlayerLeft;
             PlayerEvents.SpawningRagdoll += OnSpawnRagdoll;
+            PlayerEvents.ChangingRole += OnChangingRole;
             Scp049.StartingRecall += OnTryToRevive;
             Log.Debug($"{scp069.Nickname} Became SCP-069 Initializing component.", Plugin.Instance.Config.Debug);
-            string name = scp069.DisplayNickname.IsEmpty() ? scp069.Nickname : scp069.DisplayNickname;
-            Log.Info($" el nombre es {name}");
         }
         public void UnRegisteringEvents()
         {
@@ -125,6 +129,12 @@ namespace Scp069.Component
             Destroy();
 
         }
+        private void OnChangingRole(ChangingRoleEventArgs ev)
+        {
+            if (ev.Player != scp069) return;
+
+            Destroy();
+        }
         private void OnKill(DyingEventArgs ev)
         {
             if (ev.Killer != scp069 || ev.Target == scp069) return;
@@ -140,7 +150,7 @@ namespace Scp069.Component
             // Inventory
             ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
             ItemType t = ItemType.None;
-            if (ev.Target.CurrentItem != null && ev.Target.CufferId != -1)
+            if (ev.Target.CurrentItem != null)
             {
                 t = ev.Target.CurrentItem.id;
             }
@@ -158,11 +168,27 @@ namespace Scp069.Component
             }
             // Steal shape 
             scp069roletype = ev.Target.Role;
-            string targetname = ev.Target.DisplayNickname.IsEmpty() ? ev.Target.Nickname : ev.Target.DisplayNickname;
+            string targetname;
+            if (string.IsNullOrEmpty(ev.Target.DisplayNickname))
+            {
+                targetname = ev.Target.Nickname;
+            }
+            else
+            {
+                targetname = ev.Target.DisplayNickname;
+            }
+            if (!Handlers.MainHandler.victims.Contains(ev.Target))
+            {
+                Handlers.MainHandler.victims.Add(ev.Target);
+                Log.Info($"{Handlers.MainHandler.victims}");
+            }
             ev.Killer.DisplayNickname = targetname;
             UpdateNickname(targetname);
-            UpdateItemOnHand(t);
+            //UpdateItemOnHand(t); This not work for now.
+            Log.Info("Antes de cambiar la forma");
             ev.Killer.Change069Appearance(scp069roletype);
+            Log.Info("Despues de cambiar la forma");
+            Log.Info($"Despues del steal shape");
             //Movement speed
             if (Plugin.Instance.Config.Scp069.movementSpeedIntesify > 0)
             {
@@ -170,16 +196,17 @@ namespace Scp069.Component
                 ev.Killer.TryGetEffect(EffectType.Scp207, out var playerEffect);
                 playerEffect.Intensity = Plugin.Instance.Config.Scp069.movementSpeedIntesify;
             }
-            // Adding victim to the list.
-            if (!Handlers.MainHandler.victims.Contains(ev.Target))
-            {
-                Handlers.MainHandler.victims.Add(ev.Target);
-            }
         }
         private void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.Target != scp069 && ev.HitInformations.GetDamageType() != DamageTypes.Scp207) return;
-            ev.Amount = 0;
+            if (ev.Target == scp069 && ev.HitInformations.GetDamageType() == DamageTypes.Scp207)
+            {
+                ev.Amount = 0;
+            }
+            else
+            {
+                return;
+            }
         }
         private void OnSpawnRagdoll(SpawningRagdollEventArgs ev)
         {
@@ -201,17 +228,32 @@ namespace Scp069.Component
         }
         private void UpdateNickname(string nicktodisplay)
         {
-            foreach (Player player in Handlers.MainHandler.victims)
+            try
             {
-                Timing.CallDelayed(0.5f, () => player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(NicknameSync), nameof(NicknameSync.Network_displayName), $"{nicktodisplay} (SCP-069)"));
+                foreach (Player player in Handlers.MainHandler.victims)
+                {
+                    Timing.CallDelayed(0.5f, () => player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(NicknameSync), nameof(NicknameSync.Network_displayName), $"{nicktodisplay} (SCP-069)"));
+                }
             }
+            catch (Exception e)
+            {
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
+            }
+            
         }
         private void UpdateItemOnHand(ItemType it)
         {
-            foreach (Player player in Player.List)
+            try
             {
-                player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(Inventory),
-                 nameof(Inventory._curItemSynced), (sbyte)it);
+                foreach (Player player in Player.List)
+                {
+                    player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(Inventory),
+                  nameof(Inventory._curItemSynced), (sbyte)it);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
         }
 

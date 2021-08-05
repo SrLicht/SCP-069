@@ -42,20 +42,8 @@ namespace Scp069.EventHandlers
                             }
                         case "give":
                             {
-                                if (arguments.Array[1] is null)
+                                if (arguments.Count == 2)
                                 {
-                                    Player plySender = Player.Get((sender as CommandSender).SenderId);
-                                    plySender.GameObject.AddComponent<Component.Scp069Component>();
-                                    response = $"\nGiving you the SCP-069, have fun.";
-                                    return true;
-                                }
-                                else
-                                {
-                                    if (arguments.Count > 2)
-                                    {
-                                        response = $"The name does not have to have spaces.";
-                                        return false;
-                                    }
                                     try
                                     {
                                         Player plytogive = Player.Get(arguments.At(1));
@@ -69,43 +57,32 @@ namespace Scp069.EventHandlers
                                         return false;
                                     }
                                 }
-                            }
-                        case "remove":
-                            {
-                                if (arguments.Array[1] is null)
+                                else if (arguments.Count == 1)
                                 {
                                     Player plySender = Player.Get((sender as CommandSender).SenderId);
-                                    try
-                                    {
-                                        plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
-                                        component.Destroy();
-                                        Handlers.MainHandler.scp069Players.Remove(plySender);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        response = $"\nThe player is not SCP-069";
-                                        return false;
-                                    };
-                                    response = $"\nRemoving you the SCP-069.";
+                                    plySender.GameObject.AddComponent<Component.Scp069Component>();
+                                    response = $"\nGiving you the SCP-069, have fun.";
                                     return true;
                                 }
                                 else
                                 {
+                                    response = $"The name does not have to have spaces.";
+                                    return false;
+                                }
+                            }
+                        case "remove":
+                            {
+                                if (arguments.Count == 2)
+                                {
                                     try
                                     {
-                                        Log.Info($"La cantidad de argumentos es {arguments.Count}");
-                                        if (arguments.Count > 2)
-                                        {
-                                            response = $"The name does not have to have spaces.";
-                                            return false;
-                                        }
-
                                         Player plytoremove = Player.Get(arguments.At(1));
                                         try
                                         {
                                             plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
                                             component.Destroy();
-                                            Handlers.MainHandler.scp069Players.Remove(plytoremove);
+                                            response = $"Removing SCP-069 of {plytoremove.Nickname}";
+                                            return true;
                                         }
                                         catch (Exception)
                                         {
@@ -113,14 +90,41 @@ namespace Scp069.EventHandlers
                                             response = $"\nThe player is not SCP-069";
                                             return false;
                                         }
-                                        response = $"\nRemoving SCP-069 to {plytoremove.Nickname}";
-                                        return true;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        response = $"\nThe player is not SCP-069";
+                                        return false;
+                                    }
+                                }
+                                else if (arguments.Count == 1)
+                                {
+                                    try
+                                    {
+                                        Player plySender = Player.Get((sender as CommandSender).SenderId);
+                                        try
+                                        {
+                                            plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
+                                            component.Destroy();
+                                            response = $"Removing you the SCP-069.";
+                                            return true;
+                                        }
+                                        catch (Exception)
+                                        {
+                                            response = $"\nThe player is not SCP-069";
+                                            return false;
+                                        }
                                     }
                                     catch (Exception)
                                     {
                                         response = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID or maybe it doesn't even have the 069 to remove it.";
                                         return false;
                                     }
+                                }
+                                else
+                                {
+                                    response = $"The name does not have to have spaces.";
+                                    return false;
                                 }
                             }
                         case "help":
