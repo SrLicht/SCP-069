@@ -8,7 +8,7 @@ using Exiled.API.Extensions;
 namespace Scp069.EventHandlers
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
-    public class Commad : ICommand
+    public class Scp069Command : ICommand
     {
         public string Command => "069";
 

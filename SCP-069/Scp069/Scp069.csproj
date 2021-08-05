@@ -89,7 +89,7 @@
   <ItemGroup>
     <Compile Include="Base\Handlers.cs" />
     <Compile Include="Component\Scp069Component.cs" />
-    <Compile Include="Handlers\Commad.cs" />
+    <Compile Include="Handlers\Scp069Command.cs" />
     <Compile Include="Handlers\MainHandler.cs" />
     <Compile Include="System\Config.cs" />
     <Compile Include="System\Extension.cs" />
