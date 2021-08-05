@@ -1,4 +1,4 @@
-[![Github All Releases](https://img.shields.io/github/downloads/SrLicht/SCP-069/total.svg)]() [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+[![Github All Releases](https://img.shields.io/github/downloads/SrLicht/SCP-069/total.svg)](https://github.com/SrLicht/SCP-069/releases) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SrLicht/SCP-069/graphs/commit-activity) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/SrLicht/SCP-069/blob/main/LICENSE)
 
 
 
