@@ -16,7 +16,7 @@ using Exiled.API.Extensions;
 
 namespace Scp069.Component
 {
-    class SCP_069_Component : MonoBehaviour
+    public class Scp069Component : MonoBehaviour
     {
         private Player scp069;
         private float damageTimer = Plugin.Instance.Config.Scp069.GracePeriodStart, damageDeal = 0;
@@ -25,6 +25,7 @@ namespace Scp069.Component
         public static RoleType scp069roletype;
         private void Awake()
         {
+            Log.Debug($"Iniciando awake");
             RegisteringEvents();
         }
         private void Start()
@@ -55,13 +56,14 @@ namespace Scp069.Component
         {
             if (!(Player.Get(gameObject) is Player ply))
             {
+                Log.Error("Error Getting Player");
                 Destroy();
                 return;
             }
             scp069 = ply;
             Handlers.MainHandler.scp069Players.Add(scp069);
             scp069.Role = RoleType.Scp049;
-            scp069.CustomInfo = $"<color=#E7205C>{(scp069.DisplayNickname.IsEmpty() ? scp069.Nickname : scp069.DisplayNickname)}</color>\n<b><color=red>SCP-069</color></b>";
+            scp069.CustomInfo = $"<color=#E7205C>{scp069.Nickname}</color>\n<b><color=red>SCP-069</color></b>";
             scp069.Health = Plugin.Instance.Config.Scp069.ClonerHealth;
             scp069.MaxHealth = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
 
@@ -74,17 +76,20 @@ namespace Scp069.Component
             PlayerEvents.Destroying += OnPlayerLeft;
             PlayerEvents.SpawningRagdoll += OnSpawnRagdoll;
             Scp049.StartingRecall += OnTryToRevive;
+            Log.Debug($"{scp069.Nickname} Became SCP-069 Initializing component.", Plugin.Instance.Config.Debug);
+            string name = scp069.DisplayNickname.IsEmpty() ? scp069.Nickname : scp069.DisplayNickname;
+            Log.Info($" el nombre es {name}");
         }
         public void UnRegisteringEvents()
         {
             Timing.KillCoroutines(enableDamage);
-            PlayerEvents.Dying += OnDeath;
-            PlayerEvents.Dying += OnKill;
-            PlayerEvents.Hurting += OnHurting;
-            PlayerEvents.Verified += OnPlayerVerify;
-            PlayerEvents.Destroying += OnPlayerLeft;
-            PlayerEvents.SpawningRagdoll += OnSpawnRagdoll;
-            Scp049.StartingRecall += OnTryToRevive;
+            PlayerEvents.Dying -= OnDeath;
+            PlayerEvents.Dying -= OnKill;
+            PlayerEvents.Hurting -= OnHurting;
+            PlayerEvents.Verified -= OnPlayerVerify;
+            PlayerEvents.Destroying -= OnPlayerLeft;
+            PlayerEvents.SpawningRagdoll -= OnSpawnRagdoll;
+            Scp049.StartingRecall -= OnTryToRevive;
 
             CancelInvoke("DoDamage");
             var nully = "player is null";
@@ -109,7 +114,6 @@ namespace Scp069.Component
         private void OnTryToRevive(StartingRecallEventArgs ev)
         {
             if (ev.Scp049 != scp069) return;
-
             ev.IsAllowed = false;
         }
         private void OnDeath(DyingEventArgs ev)

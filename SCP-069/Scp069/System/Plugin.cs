@@ -84,6 +84,7 @@ namespace Scp069.System
                 foreach (var item in handlers)
                 {
                     item.Start();
+                    Log.Debug($"Iniciando Handler {item.GetType().Name}");
                 }
                 Log.Info("Plugin fully loaded.");
             }

@@ -35,7 +35,7 @@ namespace Scp069.Handlers
             Exiled.Events.Handlers.Player.ChangingRole -= ChanginRole;
             foreach (Player plys in scp069Players)
             {
-                if (plys.GameObject.TryGetComponent<Component.SCP_069_Component>(out var comp))
+                if (plys.GameObject.TryGetComponent<Component.Scp069Component>(out var comp))
                 {
                     comp.Destroy();
                 }
@@ -77,7 +77,7 @@ namespace Scp069.Handlers
                         if (player == null)
                             return;
 
-                        player.GameObject.AddComponent<Component.SCP_069_Component>();
+                        player.GameObject.AddComponent<Component.Scp069Component>();
                     }
                 });
             }

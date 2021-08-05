@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Handlers.cs" />
-    <Compile Include="Component\SCP-069-Component.cs" />
+    <Compile Include="Component\Scp069Component.cs" />
     <Compile Include="Handlers\Commad.cs" />
     <Compile Include="Handlers\MainHandler.cs" />
     <Compile Include="System\Config.cs" />
