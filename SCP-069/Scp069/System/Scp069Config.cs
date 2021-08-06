@@ -35,6 +35,8 @@ namespace Scp069.System
         public int ClonerMaxHealth { get; set; } = 2000;
         [Description("As it says, the amount of life that is healed by killing.")]
         public int ClonerLifesteal { get; set; } = 150;
+
+        public CommandTranslate TranslateCommand { get; set; } = new CommandTranslate();
     }
     public class BroadcastSetting
     {
@@ -43,6 +45,20 @@ namespace Scp069.System
         public string Killbroadcast { get; set; } = "<b>You were killed by <color=red>SCP-069</color></b>";
         public ushort SpawnBroadcastDuration { get; set; } = 8;
         public string SpawnBroadcast { get; set; } = "<b><size=25>You're <color=red>SCP-069</color>. When killing a human, you will steal it's shape, inventory and size. You will also receive {dmg} damage every few seconds until you find a new victim, also healing for {heal}hp on every kill.</size></b>";
+    }
+    public class CommandTranslate
+    {
+        public string ArgumentEmpty { get; set; } = "Type\n\"069 help\"";
+        public string RoundDontStarted { get; set; } = "The round has to be started in order to execute this command";
+        public string Scp069ListTitle { get; set; } = "\nList of SCP-069\n|--ID--|--Nickname--|\n";
+        public string Scp069ListPerPerson { get; set; } = "{id} - {nick} is SCP-069\n";
+        public string NoScp069InList { get; set; } = "\nThere is no SCP-069 in this round.";
+        public string GiveCommand_GivingtoAnotherPlayer { get; set; } = "\nGiving SCP-069 to {nick}";
+        public string GiveCommand_ErrorGettinAnotherPlayer { get; set; } = "\nError getting player\nMaybe it got disconnected or you misspelled its name or ID.";
+        public string GiveCommand_Givingtoyou { get; set; } = "\nGiving you the SCP-069, have fun.";
+        public string ErrorNameWithSpaces { get; set; } = "\nThe name does not have to have spaces.";
+        public string RemoveCommand_RemovingPlayer { get; set; } = "Removing SCP-069 of {nick}";
+        public string RemoveCommand_IsNotSCP069 { get; set; } = "The player is not SCP-069";
     }
 
 }

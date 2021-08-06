@@ -70,10 +70,9 @@ namespace Scp069.Handlers
                     var list = Player.Get(RoleType.ClassD).ToList();
                     if (list.Count == 0 || list.Count() < plugin.Config.Scp069.ClonerRatsNeeded) return;
 
-                    if (UnityEngine.Random.Range(1, 101) <= plugin.Config.Scp069.ClonerChance)
+                    if (UnityEngine.Random.Range(0, 101) <= plugin.Config.Scp069.ClonerChance)
                     {
-                        Player player = list[plugin.random.Next(list.Count())];
-
+                        Player player = list[UnityEngine.Random.Range(1, list.Count())];
                         if (player == null)
                             return;
 

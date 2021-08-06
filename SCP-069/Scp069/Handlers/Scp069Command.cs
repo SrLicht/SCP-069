@@ -24,12 +24,12 @@ namespace Scp069.EventHandlers
                 {
                     if (arguments.IsEmpty())
                     {
-                        response = $"Type\n\"069 help\"";
+                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ArgumentEmpty}";
                         return false;
                     }
                     else if (!Round.IsStarted)
                     {
-                        response = $"The round has to be started in order to execute this command";
+                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RoundDontStarted}";
                         return false;
                     }
                     switch (arguments.At(0).ToLower())
@@ -162,17 +162,17 @@ namespace Scp069.EventHandlers
         }
         private string AllScps069()
         {
-            string msg = "\nList of SCP-069\n|--ID--|--Nickname--|\n";
+            string msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListTitle}";
             if (Handlers.MainHandler.scp069Players.Count > 0)
             {
                 foreach (Player ply in Handlers.MainHandler.scp069Players)
                 {
-                    msg += $"{ply.Id} - {ply.Nickname} is SCP-069\n";
+                    msg += $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}";
                 }
             }
             else
             {
-                msg = "\nThere is no SCP-069 in this round.";
+                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.NoScp069InList}";
             }
             return msg;
         }
