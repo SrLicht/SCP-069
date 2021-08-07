@@ -4,6 +4,7 @@ using Exiled.API.Features;
 using Scp069.System;
 using Exiled.API.Enums;
 using Exiled.API.Extensions;
+using RemoteAdmin;
 
 namespace Scp069.EventHandlers
 {
@@ -24,12 +25,16 @@ namespace Scp069.EventHandlers
                 {
                     if (arguments.IsEmpty())
                     {
-                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ArgumentEmpty}";
+                        response = $"{Plugin.Instance.Config.TranslateCommand.ArgumentEmpty}";
                         return false;
+                    }
+                    if(!(sender is PlayerCommandSender))
+                    {
+                        response = $"{Plugin.Instance.Config.TranslateCommand}";
                     }
                     else if (!Round.IsStarted)
                     {
-                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RoundDontStarted}";
+                        response = $"{Plugin.Instance.Config.TranslateCommand.RoundDontStarted}";
                         return false;
                     }
                     switch (arguments.At(0).ToLower())
@@ -48,12 +53,12 @@ namespace Scp069.EventHandlers
                                     {
                                         var plytogive = Player.Get(arguments.At(1));
                                         plytogive.GameObject.AddComponent<Component.Scp069Component>();
-                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
                                         return true;
                                     }
                                     catch (Exception)
                                     {
-                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
@@ -61,12 +66,12 @@ namespace Scp069.EventHandlers
                                 {
                                     var plySender = Player.Get((sender as CommandSender).SenderId);
                                     plySender.GameObject.AddComponent<Component.Scp069Component>();
-                                    response = $"\n{Plugin.Instance.Config.Scp069.TranslateCommand.GiveCommand_Givingtoyou}";
+                                    response = $"\n{Plugin.Instance.Config.TranslateCommand.GiveCommand_Givingtoyou}";
                                     return true;
                                 }
                                 else
                                 {
-                                    response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
+                                    response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                     return false;
                                 }
                             }
@@ -81,19 +86,19 @@ namespace Scp069.EventHandlers
                                         {
                                             plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
                                             component.Destroy();
-                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
                                             return true;
                                         }
                                         catch (Exception)
                                         {
 
-                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ThePlayerIsNot069}";
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
                                             return false;
                                         }
                                     }
                                     catch (Exception)
                                     {
-                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
@@ -106,42 +111,42 @@ namespace Scp069.EventHandlers
                                         {
                                             plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
                                             component.Destroy();
-                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RemoveCommand_RemovingYou}";
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
                                             return true;
                                         }
                                         catch (Exception)
                                         {
-                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ThePlayerIsNot069}";
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
                                             return false;
                                         }
                                     }
                                     catch (Exception)
                                     {
-                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
                                 else
                                 {
-                                    response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
+                                    response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                     return false;
                                 }
                             }
                         case "help":
                             {
                                 string msg;
-                                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_Title}\n" +
-                                    $"069 list | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_listDescription}\n" +
-                                    $"069 give | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_giveDescription1}\n" +
-                                    $"069 give [PlayerName/PlayerID] | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_giveDescription2}\n" +
-                                    $"069 remove | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_removeDescription1}\n" +
-                                    $"069 remove [PlayerName/PlayerID] | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_removeDescription2}\n";
+                                msg = $"{Plugin.Instance.Config.TranslateCommand.HelpCommand_Title}\n" +
+                                    $"069 list | {Plugin.Instance.Config.TranslateCommand.HelpCommand_listDescription}\n" +
+                                    $"069 give | {Plugin.Instance.Config.TranslateCommand.HelpCommand_giveDescription1}\n" +
+                                    $"069 give [PlayerName/PlayerID] | {Plugin.Instance.Config.TranslateCommand.HelpCommand_giveDescription2}\n" +
+                                    $"069 remove | {Plugin.Instance.Config.TranslateCommand.HelpCommand_removeDescription1}\n" +
+                                    $"069 remove [PlayerName/PlayerID] | {Plugin.Instance.Config.TranslateCommand.HelpCommand_removeDescription2}\n";
 
                                 response = msg;
                                 return true;
                             }
                         default:
-                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ArgumentEmpty}";
+                            response = $"{Plugin.Instance.Config.TranslateCommand.ArgumentEmpty}";
                             return false;
                     }
                 }
@@ -162,17 +167,17 @@ namespace Scp069.EventHandlers
         }
         private string AllScps069()
         {
-            string msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListTitle}\n";
+            string msg = $"{Plugin.Instance.Config.TranslateCommand.Scp069ListTitle}\n";
             if (Handlers.MainHandler.scp069Players.Count > 0)
             {
                 foreach (Player ply in Handlers.MainHandler.scp069Players)
                 {
-                    msg += $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}\n";
+                    msg += $"{Plugin.Instance.Config.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}\n";
                 }
             }
             else
             {
-                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.NoScp069InList}\n";
+                msg = $"{Plugin.Instance.Config.TranslateCommand.NoScp069InList}\n";
             }
             return msg;
         }

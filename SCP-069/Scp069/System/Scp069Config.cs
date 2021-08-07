@@ -35,8 +35,6 @@ namespace Scp069.System
         public int ClonerMaxHealth { get; set; } = 2000;
         [Description("As it says, the amount of life that is healed by killing.")]
         public int ClonerLifesteal { get; set; } = 150;
-
-        public CommandTranslate TranslateCommand { get; set; } = new CommandTranslate();
     }
     public class BroadcastSetting
     {
@@ -49,6 +47,7 @@ namespace Scp069.System
     public class CommandTranslate
     {
         public string ArgumentEmpty { get; set; } = "Type\n\"069 help\"";
+        public string IfSenderIsNotaPlayer { get; set; } = $"This command can only be executed from RemoteAdmin.";
         public string ThePlayerIsNot069 { get; set; } = "The player is not SCP-069";
         public string SpecifiedPlayerDoesNotExist { get; set; } = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID";
         public string RoundDontStarted { get; set; } = "The round has to be started in order to execute this command";

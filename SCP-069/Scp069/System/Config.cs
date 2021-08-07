@@ -12,6 +12,7 @@ namespace Scp069.System
         public bool Debug { get; set; } = false;
         public BroadcastSetting Broadcasting { get; set; } = new BroadcastSetting();
         public Scp069Config Scp069 { get; set; } = new Scp069Config();
+        public CommandTranslate TranslateCommand { get; set; } = new CommandTranslate();
 
     }
 
