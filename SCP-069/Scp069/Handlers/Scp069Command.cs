@@ -46,27 +46,27 @@ namespace Scp069.EventHandlers
                                 {
                                     try
                                     {
-                                        Player plytogive = Player.Get(arguments.At(1));
+                                        var plytogive = Player.Get(arguments.At(1));
                                         plytogive.GameObject.AddComponent<Component.Scp069Component>();
-                                        response = $"\nGiving SCP-069 to {plytogive.Nickname}";
+                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
                                         return true;
                                     }
                                     catch (Exception)
                                     {
-                                        response = "\nError getting player\nMaybe it got disconnected or you misspelled its name or ID.";
+                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
                                 else if (arguments.Count == 1)
                                 {
-                                    Player plySender = Player.Get((sender as CommandSender).SenderId);
+                                    var plySender = Player.Get((sender as CommandSender).SenderId);
                                     plySender.GameObject.AddComponent<Component.Scp069Component>();
-                                    response = $"\nGiving you the SCP-069, have fun.";
+                                    response = $"\n{Plugin.Instance.Config.Scp069.TranslateCommand.GiveCommand_Givingtoyou}";
                                     return true;
                                 }
                                 else
                                 {
-                                    response = $"The name does not have to have spaces.";
+                                    response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                     return false;
                                 }
                             }
@@ -76,24 +76,24 @@ namespace Scp069.EventHandlers
                                 {
                                     try
                                     {
-                                        Player plytoremove = Player.Get(arguments.At(1));
+                                        var plytoremove = Player.Get(arguments.At(1));
                                         try
                                         {
                                             plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
                                             component.Destroy();
-                                            response = $"Removing SCP-069 of {plytoremove.Nickname}";
+                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
                                             return true;
                                         }
                                         catch (Exception)
                                         {
 
-                                            response = $"\nThe player is not SCP-069";
+                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ThePlayerIsNot069}";
                                             return false;
                                         }
                                     }
                                     catch (Exception)
                                     {
-                                        response = $"\nThe player is not SCP-069";
+                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
@@ -101,47 +101,47 @@ namespace Scp069.EventHandlers
                                 {
                                     try
                                     {
-                                        Player plySender = Player.Get((sender as CommandSender).SenderId);
+                                        var plySender = Player.Get((sender as CommandSender).SenderId);
                                         try
                                         {
                                             plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
                                             component.Destroy();
-                                            response = $"Removing you the SCP-069.";
+                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.RemoveCommand_RemovingYou}";
                                             return true;
                                         }
                                         catch (Exception)
                                         {
-                                            response = $"\nThe player is not SCP-069";
+                                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ThePlayerIsNot069}";
                                             return false;
                                         }
                                     }
                                     catch (Exception)
                                     {
-                                        response = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID or maybe it doesn't even have the 069 to remove it.";
+                                        response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
                                 }
                                 else
                                 {
-                                    response = $"The name does not have to have spaces.";
+                                    response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                     return false;
                                 }
                             }
                         case "help":
                             {
                                 string msg;
-                                msg = $"Commands you can use:\n" +
-                                    $"069 list | Gives you a list of players that are SCP-069.\n" +
-                                    $"069 give | Gives you the SCP-069\n" +
-                                    $"069 give [PlayerName/PlayerID] | It gives the specified player the SCP-069, there can be more than 1, there should not be any problem\n" +
-                                    $"069 remove | Removes SCP-069\n" +
-                                    $"069 remove [PlayerName/PlayerID] | Remove the SCP-069 from the specified player, check first if he really has it.\n";
+                                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_Title}\n" +
+                                    $"069 list | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_listDescription}\n" +
+                                    $"069 give | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_giveDescription1}\n" +
+                                    $"069 give [PlayerName/PlayerID] | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_giveDescription2}\n" +
+                                    $"069 remove | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_removeDescription1}\n" +
+                                    $"069 remove [PlayerName/PlayerID] | {Plugin.Instance.Config.Scp069.TranslateCommand.HelpCommand_removeDescription2}\n";
 
                                 response = msg;
                                 return true;
                             }
                         default:
-                            response = "\nUse \"069 help\"";
+                            response = $"{Plugin.Instance.Config.Scp069.TranslateCommand.ArgumentEmpty}";
                             return false;
                     }
                 }
@@ -162,17 +162,17 @@ namespace Scp069.EventHandlers
         }
         private string AllScps069()
         {
-            string msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListTitle}";
+            string msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListTitle}\n";
             if (Handlers.MainHandler.scp069Players.Count > 0)
             {
                 foreach (Player ply in Handlers.MainHandler.scp069Players)
                 {
-                    msg += $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}";
+                    msg += $"{Plugin.Instance.Config.Scp069.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}\n";
                 }
             }
             else
             {
-                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.NoScp069InList}";
+                msg = $"{Plugin.Instance.Config.Scp069.TranslateCommand.NoScp069InList}\n";
             }
             return msg;
         }

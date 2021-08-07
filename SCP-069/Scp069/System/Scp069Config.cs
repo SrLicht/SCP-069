@@ -49,16 +49,25 @@ namespace Scp069.System
     public class CommandTranslate
     {
         public string ArgumentEmpty { get; set; } = "Type\n\"069 help\"";
+        public string ThePlayerIsNot069 { get; set; } = "The player is not SCP-069";
+        public string SpecifiedPlayerDoesNotExist { get; set; } = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID";
         public string RoundDontStarted { get; set; } = "The round has to be started in order to execute this command";
         public string Scp069ListTitle { get; set; } = "\nList of SCP-069\n|--ID--|--Nickname--|\n";
         public string Scp069ListPerPerson { get; set; } = "{id} - {nick} is SCP-069\n";
         public string NoScp069InList { get; set; } = "\nThere is no SCP-069 in this round.";
         public string GiveCommand_GivingtoAnotherPlayer { get; set; } = "\nGiving SCP-069 to {nick}";
-        public string GiveCommand_ErrorGettinAnotherPlayer { get; set; } = "\nError getting player\nMaybe it got disconnected or you misspelled its name or ID.";
         public string GiveCommand_Givingtoyou { get; set; } = "\nGiving you the SCP-069, have fun.";
-        public string ErrorNameWithSpaces { get; set; } = "\nThe name does not have to have spaces.";
         public string RemoveCommand_RemovingPlayer { get; set; } = "Removing SCP-069 of {nick}";
-        public string RemoveCommand_IsNotSCP069 { get; set; } = "The player is not SCP-069";
+        public string RemoveCommand_RemovingYou { get; set; } = "Removing you the SCP-069.";
+        public string HelpCommand_Title { get; set; } = "Commands you can use:";
+        public string HelpCommand_listDescription { get; set; } = "Gives you a list of players that are SCP-069.";
+        public string HelpCommand_giveDescription1 { get; set; } = "Gives you the SCP-069";
+        public string HelpCommand_giveDescription2 { get; set; } = "It gives the specified player the SCP-069, there can be more than 1, there should not be any problem";
+        public string HelpCommand_removeDescription1 { get; set; } = "Removes SCP-069";
+        public string HelpCommand_removeDescription2 { get; set; } = "Remove the SCP-069 from the specified player, check first if he really has it.";
+
+
+
     }
 
 }
