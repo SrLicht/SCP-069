@@ -18,11 +18,14 @@ namespace Scp069.Component
 {
     public class Scp069Component : MonoBehaviour
     {
+        #region Variables
         private Player scp069;
         private float damageTimer, damageDeal = 0;
         private bool damageEnable = false;
         private CoroutineHandle enableDamage;
         public RoleType scp069roletype;
+        #endregion
+
         private void Awake()
         {
             RegisteringEvents();
@@ -239,7 +242,7 @@ namespace Scp069.Component
             {
                 Log.Error($"{e.TargetSite} {e.Message}\n{e.StackTrace}");
             }
-            
+
         }
         private void UpdateItemOnHand(ItemType it)
         {

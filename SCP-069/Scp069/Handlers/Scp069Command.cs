@@ -28,7 +28,7 @@ namespace Scp069.EventHandlers
                         response = $"{Plugin.Instance.Config.TranslateCommand.ArgumentEmpty}";
                         return false;
                     }
-                    if(!(sender is PlayerCommandSender))
+                    if (!(sender is PlayerCommandSender))
                     {
                         response = $"{Plugin.Instance.Config.TranslateCommand}";
                     }

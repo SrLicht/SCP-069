@@ -69,7 +69,7 @@ namespace Scp069.System
             {
                 target.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
             }
-                
+
         }
     }
 }

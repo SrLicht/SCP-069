@@ -55,9 +55,10 @@ namespace Scp069.Handlers
                 }
             }
         }*/
+
         public void ChanginRole(ChangingRoleEventArgs ev)
         {
-            if(victims.Contains(ev.Player) && ev.NewRole != RoleType.Spectator)
+            if (victims.Contains(ev.Player) && ev.NewRole != RoleType.Spectator)
             {
                 victims.Remove(ev.Player);
             }
