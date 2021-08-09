@@ -4,8 +4,6 @@ using MEC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scp069.Handlers
 {
@@ -67,7 +65,8 @@ namespace Scp069.Handlers
         {
             try
             {
-                Timing.CallDelayed(1f, () => {
+                Timing.CallDelayed(1f, () =>
+                {
                     var list = Player.Get(RoleType.ClassD).ToList();
                     if (list.Count == 0 || list.Count() < plugin.Config.Scp069.ClonerRatsNeeded) return;
 

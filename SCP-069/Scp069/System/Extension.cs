@@ -1,11 +1,6 @@
-﻿using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Extensions;
-using Mirror;
 
 namespace Scp069.System
 {

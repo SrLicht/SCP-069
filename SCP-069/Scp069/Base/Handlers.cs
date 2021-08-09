@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scp069.System;
+﻿using Scp069.System;
 
 namespace Scp069.Base
 {
