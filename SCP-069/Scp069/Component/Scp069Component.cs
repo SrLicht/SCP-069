@@ -1,18 +1,15 @@
-﻿using System;
-using Exiled.API.Enums;
+﻿using Exiled.API.Enums;
+using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
-using UnityEngine;
-using Scp049 = Exiled.Events.Handlers.Scp049;
-using ServerEvents = Exiled.Events.Handlers.Server;
-using PlayerEvents = Exiled.Events.Handlers.Player;
-using System.Linq;
-using Mirror;
-using Scp069.System;
-using Scp069.EventHandlers;
 using MEC;
+using Scp069.System;
+using System;
 using System.Collections.Generic;
-using Exiled.API.Extensions;
+using System.Linq;
+using UnityEngine;
+using PlayerEvents = Exiled.Events.Handlers.Player;
+using Scp049 = Exiled.Events.Handlers.Scp049;
 
 namespace Scp069.Component
 {
@@ -140,7 +137,7 @@ namespace Scp069.Component
         }
         private void OnKill(DyingEventArgs ev)
         {
-            if (ev.Killer != scp069 || ev.Target == scp069) return;
+            if (ev.Killer != scp069 || ev.Target == scp069 || ev.Target == null) return;
 
             // Gracer Period
             enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.Scp069.GracePeriodOnKill));
@@ -171,15 +168,7 @@ namespace Scp069.Component
             }
             // Steal shape 
             scp069roletype = ev.Target.Role;
-            string targetname;
-            if (string.IsNullOrEmpty(ev.Target.DisplayNickname))
-            {
-                targetname = ev.Target.Nickname;
-            }
-            else
-            {
-                targetname = ev.Target.DisplayNickname;
-            }
+            string targetname = string.IsNullOrEmpty(ev.Target.DisplayNickname) ? ev.Target.Nickname : ev.Target.DisplayNickname;
             if (!Handlers.MainHandler.victims.Contains(ev.Target))
             {
                 Handlers.MainHandler.victims.Add(ev.Target);
@@ -188,10 +177,7 @@ namespace Scp069.Component
             ev.Killer.DisplayNickname = targetname;
             UpdateNickname(targetname);
             //UpdateItemOnHand(t); This not work for now.
-            Log.Info("Antes de cambiar la forma");
             ev.Killer.Change069Appearance(scp069roletype);
-            Log.Info("Despues de cambiar la forma");
-            Log.Info($"Despues del steal shape");
             //Movement speed
             if (Plugin.Instance.Config.Scp069.movementSpeedIntesify > 0)
             {

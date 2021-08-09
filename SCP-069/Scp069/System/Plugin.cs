@@ -1,9 +1,5 @@
-﻿using System;
-using Server = Exiled.Events.Handlers.Server;
-using Player = Exiled.Events.Handlers.Player;
-using Exiled.API.Features;
-using Scp069.EventHandlers;
-using Scp069.Base;
+﻿using Exiled.API.Features;
+using System;
 using System.Collections.Generic;
 
 namespace Scp069.System
@@ -26,8 +22,8 @@ namespace Scp069.System
         /// </summary>
         public static Plugin Instance => Singleton;
 
-        public override Version Version => new Version(2, 0, 9);
-        public override Version RequiredExiledVersion => new Version(2, 11, 0);
+        public override Version Version => new Version(2, 0, 10);
+        public override Version RequiredExiledVersion => new Version(2, 11, 1);
         public override string Author { get; } = "SrLicht & Beryl";
 
         public override void OnEnabled()

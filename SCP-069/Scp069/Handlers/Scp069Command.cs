@@ -1,10 +1,8 @@
-﻿using System;
-using CommandSystem;
+﻿using CommandSystem;
 using Exiled.API.Features;
-using Scp069.System;
-using Exiled.API.Enums;
-using Exiled.API.Extensions;
 using RemoteAdmin;
+using Scp069.System;
+using System;
 
 namespace Scp069.EventHandlers
 {
