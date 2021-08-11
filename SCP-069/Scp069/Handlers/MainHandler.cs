@@ -80,7 +80,9 @@ namespace Scp069.Handlers
                             var plist = Player.List.Where(p => !p.IsScp);
                             Player scp069 = plist.Random();
                             if (scp069 == null)
+                            {
                                 return;
+                            }
 
                             scp069.GameObject.AddComponent<Component.Scp069Component>();
                             scp069.Role = RoleType.Scp049;
