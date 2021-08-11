@@ -67,7 +67,7 @@ namespace Scp069.Component
             }
             scp069 = ply;
             Handlers.MainHandler.scp069Players.Add(scp069);
-            scp069.Role = RoleType.Scp049;
+            if (scp069.Role != RoleType.Scp049) scp069.Role = RoleType.Scp049;
             scp069.CustomInfo = $"<color=#E7205C>{scp069.Nickname}</color>\n<b><color=red>SCP-069</color></b>";
             scp069.Health = Plugin.Instance.Config.Scp069.ClonerHealth;
             scp069.MaxHealth = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
@@ -137,7 +137,7 @@ namespace Scp069.Component
         }
         private void OnKill(DyingEventArgs ev)
         {
-            if (ev.Killer != scp069 || ev.Target == scp069 || ev.Target == null) return;
+            if (ev.Killer != scp069 || ev.Target == scp069 || ev.Target == null || ev.Target.IsScp) return;
 
             // Gracer Period
             enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.Scp069.GracePeriodOnKill));
@@ -191,10 +191,6 @@ namespace Scp069.Component
             if (ev.Target == scp069 && ev.HitInformations.GetDamageType() == DamageTypes.Scp207)
             {
                 ev.Amount = 0;
-            }
-            else
-            {
-                return;
             }
         }
         private void OnSpawnRagdoll(SpawningRagdollEventArgs ev)
