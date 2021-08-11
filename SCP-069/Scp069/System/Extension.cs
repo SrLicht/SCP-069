@@ -1,5 +1,7 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Scp069.System
@@ -53,11 +55,8 @@ namespace Scp069.System
                     return "No deberia de salir esto, pero ok.";
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="type"></param>
+
+
         public static void Change069Appearance(this Player player, RoleType type)
         {
             foreach (var target in Player.List.Where(p => p != player && !p.IsScp))
@@ -65,6 +64,18 @@ namespace Scp069.System
                 target.SendFakeSyncVar(player.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
             }
 
+        }
+
+        public static IEnumerable<Player> GetHubs(this RoleType role) => Player.List.Where(r => r.Role == role);
+
+        public static T Random<T>(this IEnumerable<T> list)
+        {
+            return list.ToArray().Random();
+        }
+
+        public static T Random<T>(this T[] array)
+        {
+            return array[Plugin.Instance.random.Next(0, array.Length - 1)];
         }
     }
 }
