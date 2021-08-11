@@ -22,7 +22,7 @@ namespace Scp069.System
         /// </summary>
         public static Plugin Instance => Singleton;
 
-        public override Version Version => new Version(2, 0, 10);
+        public override Version Version => new Version(2, 0, 11);
         public override Version RequiredExiledVersion => new Version(2, 11, 1);
         public override string Author { get; } = "SrLicht & Beryl";
 
