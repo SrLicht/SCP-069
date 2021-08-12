@@ -13,6 +13,7 @@ The SCP-069 is a new and playable SCP, which adds the feeling that gave the SPY 
 
 
 ### 📜Commands📜
+## You can change the descriptions from the plugin config.
 | Command | Description |
 |:------------ |:------------------------------:|
 | `069 help`   | Returns a list of available 069 commands. |
