@@ -172,7 +172,6 @@ namespace Scp069.Component
             if (!Handlers.MainHandler.victims.Contains(ev.Target))
             {
                 Handlers.MainHandler.victims.Add(ev.Target);
-                Log.Info($"{Handlers.MainHandler.victims}");
             }
             ev.Killer.DisplayNickname = targetname;
             UpdateNickname(targetname);

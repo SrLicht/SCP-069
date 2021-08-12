@@ -39,25 +39,20 @@ namespace Scp069.Handlers
                     comp.Destroy();
                 }
             }
-            scp069Players = null;
-            victims = null;
+            scp069Players.Clear();
+            victims.Clear();
         }
-
-        // I do not remember if this is really necessary, so for now I leave it like that and if I see any bug I will put it back.
-        /*public void OnVerify(VerifiedEventArgs ev)
-        {
-            if (cloneGuy != null)
-            {
-                foreach(Player ply in cloneGuy)
-                {
-                    ply.ChangeAppearance(CloneGuy.cloneGuyRole);
-                }
-            }
-        }*/
 
         public void ChanginRole(ChangingRoleEventArgs ev)
         {
-            if (victims.Contains(ev.Player) && ev.NewRole != RoleType.Spectator)
+            if (!scp069Players.Contains(ev.Player) && victims.Contains(ev.Player) && ev.Player != null)
+            {
+                victims.Remove(ev.Player);
+            }
+        }
+        public void OnDestroying(DestroyingEventArgs ev)
+        {
+            if (victims.Contains(ev.Player))
             {
                 victims.Remove(ev.Player);
             }
