@@ -42,6 +42,7 @@ namespace Scp069.System
     public class CommandTranslate
     {
         public string ArgumentEmpty { get; set; } = "Type\n\"069 help\"";
+        public string TooManyArguments { get; set; } = "Too many arguments, use .069 help";
         public string IfSenderIsNotaPlayer { get; set; } = $"This command can only be executed from RemoteAdmin.";
         public string ThePlayerIsNot069 { get; set; } = "The player is not SCP-069";
         public string SpecifiedPlayerDoesNotExist { get; set; } = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID";
@@ -51,6 +52,7 @@ namespace Scp069.System
         public string NoScp069InList { get; set; } = "\nThere is no SCP-069 in this round.";
         public string GiveCommand_GivingtoAnotherPlayer { get; set; } = "\nGiving SCP-069 to {nick}";
         public string GiveCommand_Givingtoyou { get; set; } = "\nGiving you the SCP-069, have fun.";
+        public string GiveCommand_PlayerAlreadyis { get; set; } = "The player is already SCP-069";
         public string RemoveCommand_RemovingPlayer { get; set; } = "Removing SCP-069 of {nick}";
         public string RemoveCommand_RemovingYou { get; set; } = "Removing you the SCP-069.";
         public string HelpCommand_Title { get; set; } = "Commands you can use:";
