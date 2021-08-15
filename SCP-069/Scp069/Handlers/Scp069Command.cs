@@ -28,7 +28,7 @@ namespace Scp069.EventHandlers
                     }
                     if (!(sender is PlayerCommandSender))
                     {
-                        response = $"{Plugin.Instance.Config.TranslateCommand}";
+                        response = $"{Plugin.Instance?.Config.TranslateCommand.IfSenderIsNotaPlayer}";
                     }
                     else if (!Round.IsStarted)
                     {
@@ -45,89 +45,104 @@ namespace Scp069.EventHandlers
                             }
                         case "give":
                             {
+                                Log.Info(arguments.Count);
+                                if (arguments.Count > 2)
+                                {
+                                    response = Plugin.Instance.Config.TranslateCommand.TooManyArguments;
+                                    return false;
+                                }
+
                                 if (arguments.Count == 2)
                                 {
+                                    Player plytogive;
+
                                     try
                                     {
-                                        var plytogive = Player.Get(arguments.At(1));
-                                        plytogive.GameObject.AddComponent<Component.Scp069Component>();
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
-                                        return true;
+                                        plytogive = Player.Get(arguments.At(1));
                                     }
                                     catch (Exception)
                                     {
                                         response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
+                                    if (Handlers.MainHandler.scp069Players.Contains(plytogive))
+                                    {
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_PlayerAlreadyis}";
+                                        return false;
+                                    }
+
+                                    plytogive.GameObject.AddComponent<Component.Scp069Component>();
+                                    response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
+                                    return true;
+
                                 }
-                                else if (arguments.Count == 1)
+                                else
                                 {
                                     var plySender = Player.Get((sender as CommandSender).SenderId);
+
+                                    if (Handlers.MainHandler.scp069Players.Contains(plySender))
+                                    {
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_PlayerAlreadyis}";
+                                        return false;
+                                    }
                                     plySender.GameObject.AddComponent<Component.Scp069Component>();
                                     response = $"\n{Plugin.Instance.Config.TranslateCommand.GiveCommand_Givingtoyou}";
                                     return true;
                                 }
-                                else
-                                {
-                                    response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
-                                    return false;
-                                }
                             }
                         case "remove":
                             {
+                                if (arguments.Count > 2)
+                                {
+                                    response = Plugin.Instance.Config.TranslateCommand.TooManyArguments;
+                                    return false;
+                                }
                                 if (arguments.Count == 2)
                                 {
-                                    try
-                                    {
-                                        var plytoremove = Player.Get(arguments.At(1));
-                                        try
-                                        {
-                                            plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
-                                            component.Destroy();
-                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
-                                            return true;
-                                        }
-                                        catch (Exception)
-                                        {
+                                    Player plytoremove;
 
-                                            response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
-                                            return false;
-                                        }
-                                    }
-                                    catch (Exception)
-                                    {
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
-                                        return false;
-                                    }
-                                }
-                                else if (arguments.Count == 1)
-                                {
                                     try
                                     {
-                                        var plySender = Player.Get((sender as CommandSender).SenderId);
-                                        try
-                                        {
-                                            plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
-                                            component.Destroy();
-                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
-                                            return true;
-                                        }
-                                        catch (Exception)
-                                        {
-                                            response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
-                                            return false;
-                                        }
+                                        plytoremove = Player.Get(arguments.At(1));
                                     }
                                     catch (Exception)
                                     {
                                         response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
+
+                                    try
+                                    {
+                                        plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
+                                        component.Destroy();
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
+                                        return true;
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
+                                        return false;
+                                    }
+
                                 }
                                 else
                                 {
-                                    response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
-                                    return false;
+
+                                    var plySender = Player.Get((sender as CommandSender).SenderId);
+                                    try
+                                    {
+                                        plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
+                                        component.Destroy();
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
+                                        return true;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.ThePlayerIsNot069}";
+                                        return false;
+                                    }
+
                                 }
                             }
                         case "help":
