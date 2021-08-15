@@ -10,7 +10,7 @@ namespace Scp069.Base
         /// <summary>
         /// Plugin Singleton instance.
         /// </summary>
-        protected Plugin plugin => Plugin.Instance;
+        protected Plugin Plugin => Plugin.Instance;
 
         /// <summary>
         /// Activated when you start the Plugin, use it to initialize your variables and the class.

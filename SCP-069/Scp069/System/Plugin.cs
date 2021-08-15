@@ -30,7 +30,7 @@ namespace Scp069.System
         {
             try
             {
-                Log.Info("Initializing EventsHandler...");
+                Log.Info("Initializing MainHandler...");
                 RegisterEvents();
 
                 #region Logo
@@ -80,7 +80,6 @@ namespace Scp069.System
                 foreach (var item in handlers)
                 {
                     item.Start();
-                    Log.Debug($"Iniciando Handler {item.GetType().Name}");
                 }
                 Log.Info("Plugin fully loaded.");
             }
@@ -97,8 +96,8 @@ namespace Scp069.System
             {
                 item.Stop();
             }
-            Log.Info("Good bye.");
 
+            Log.Info("Good bye.");
             random = null;
             handlers = null;
 
