@@ -45,11 +45,12 @@ namespace Scp069.Handlers
 
         public void ChanginRole(ChangingRoleEventArgs ev)
         {
-            if (!scp069Players.Contains(ev.Player) && victims.Contains(ev.Player) && ev.Player != null)
+            if (!scp069Players.Contains(ev.Player) && victims.Contains(ev.Player) && ev.Player != null && ev.NewRole != RoleType.Spectator)
             {
                 victims.Remove(ev.Player);
             }
         }
+
         public void OnDestroying(DestroyingEventArgs ev)
         {
             if (victims.Contains(ev.Player))
@@ -64,13 +65,12 @@ namespace Scp069.Handlers
                 Timing.CallDelayed(2.2f, () =>
                 {
 
+                    int classd = Player.Get(RoleType.ClassD).Count();
 
-                    int classd = RoleType.ClassD.GetHubs().Count();
-
-                    if(classd >= plugin.Config.Scp069.ClonerRatsNeeded)
+                    if (classd >= Plugin.Config.Scp069.ClonerRatsNeeded)
                     {
 
-                        if (UnityEngine.Random.Range(0, 101) <= plugin.Config.Scp069.ClonerChance)
+                        if (UnityEngine.Random.Range(0, 101) <= Plugin.Config.Scp069.ClonerChance)
                         {
                             var plist = Player.List.Where(p => !p.IsScp);
                             Player scp069 = plist.Random();

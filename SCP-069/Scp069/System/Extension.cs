@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -65,8 +64,6 @@ namespace Scp069.System
             }
 
         }
-
-        public static IEnumerable<Player> GetHubs(this RoleType role) => Player.List.Where(r => r.Role == role);
 
         public static T Random<T>(this IEnumerable<T> list)
         {
