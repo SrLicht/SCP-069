@@ -45,7 +45,7 @@ namespace Scp069.EventHandlers
                             }
                         case "give":
                             {
-                                Log.Info(arguments.Count);
+                                
                                 if (arguments.Count > 2)
                                 {
                                     response = Plugin.Instance.Config.TranslateCommand.TooManyArguments;
