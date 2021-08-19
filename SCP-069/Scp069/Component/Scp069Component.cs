@@ -71,7 +71,26 @@ namespace Scp069.Component
             scp069 = ply;
             Handlers.MainHandler.scp069Players.Add(scp069);
             if (scp069.Role != RoleType.Scp049) scp069.Role = RoleType.Scp049;
-            scp069.CustomInfo = $"<color=#E7205C>{scp069.Nickname}</color>\n<b><color=red>SCP-069</color></b>";
+
+            ///https://github.com/Exiled-Team/SerpentsHand/blob/main/SerpentsHand/Logic.cs#L70-L82 | Thank you
+
+            string roleName = string.Empty;
+
+            if (!string.IsNullOrEmpty(Plugin.Instance.Config.Scp069.RankColor)){
+                roleName += $"<color={Plugin.Instance.Config.Scp069.RankColor}>";
+            }
+
+            roleName += $"{scp069.Nickname}\nSCP-069";
+
+            if (!string.IsNullOrEmpty(Plugin.Instance.Config.Scp069.RankColor))
+            {
+                roleName += "</color>";
+            }
+
+            scp069.CustomInfo = roleName;
+            scp069.ReferenceHub.nicknameSync.ShownPlayerInfo &= ~PlayerInfoArea.Nickname;
+            scp069.ReferenceHub.nicknameSync.ShownPlayerInfo &= ~PlayerInfoArea.Role;
+
             scp069.Health = Plugin.Instance.Config.Scp069.ClonerHealth;
             scp069.MaxHealth = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
 

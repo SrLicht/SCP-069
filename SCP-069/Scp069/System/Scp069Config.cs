@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
 
 namespace Scp069.System
 {
     public class Scp069Config
     {
+        [Description("The color that the SCP-069 Tag will have")]
+        public string RankColor { get; set; } = "#F11F1F";
         [Description("Determines if SCP-069 victims should leave bodies upon killing someone")]
         public bool spawnVictimsRagdolls { get; set; } = false;
         [Description("The intensity of SCP-207 that will be given to SCP-069 when killing, if the amount is 0 no movement speed will be given.")]
@@ -41,16 +45,22 @@ namespace Scp069.System
     }
     public class CommandTranslate
     {
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string ArgumentEmpty { get; set; } = "Type\n\"069 help\"";
         public string TooManyArguments { get; set; } = "Too many arguments, use .069 help";
         public string IfSenderIsNotaPlayer { get; set; } = $"This command can only be executed from RemoteAdmin.";
         public string ThePlayerIsNot069 { get; set; } = "The player is not SCP-069";
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string SpecifiedPlayerDoesNotExist { get; set; } = "\nError getting player or obtaining SCP-069\nMaybe it got disconnected or you misspelled its name or ID";
         public string RoundDontStarted { get; set; } = "The round has to be started in order to execute this command";
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string Scp069ListTitle { get; set; } = "\nList of SCP-069\n|--ID--|--Nickname--|\n";
         public string Scp069ListPerPerson { get; set; } = "{id} - {nick} is SCP-069\n";
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string NoScp069InList { get; set; } = "\nThere is no SCP-069 in this round.";
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string GiveCommand_GivingtoAnotherPlayer { get; set; } = "\nGiving SCP-069 to {nick}";
+        [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string GiveCommand_Givingtoyou { get; set; } = "\nGiving you the SCP-069, have fun.";
         public string GiveCommand_PlayerAlreadyis { get; set; } = "The player is already SCP-069";
         public string RemoveCommand_RemovingPlayer { get; set; } = "Removing SCP-069 of {nick}";

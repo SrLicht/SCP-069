@@ -85,6 +85,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\..\..\..\..\..\..\..\CerberusReferences\dependencies\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Handlers.cs" />
