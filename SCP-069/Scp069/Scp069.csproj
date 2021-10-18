@@ -29,16 +29,4 @@
      <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(EXILED_References)\UnityEngine.UnityWebRequestModule.dll" Private="false" />
   </ItemGroup>
   
-  <ItemGroup>
-     <Compile Include="Base\Handlers.cs" />
-     <Compile Include="Component\Scp069Component.cs" />
-     <Compile Include="Handlers\Scp069Command.cs" />
-     <Compile Include="Handlers\MainHandler.cs" />
-     <Compile Include="System\Config.cs" />
-     <Compile Include="System\Extension.cs" />
-     <Compile Include="System\Plugin.cs" />
-     <Compile Include="Properties\AssemblyInfo.cs" />
-     <Compile Include="System\Scp069Config.cs" />
-  </ItemGroup>
-  
 </Project>
