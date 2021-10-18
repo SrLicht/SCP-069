@@ -4,10 +4,10 @@ param (
     [Switch]$BuildNuGet
 )
 
-cd CerberusProjects
+cd SCP-069
 
 $Projects = @(
-     "SCP-069"
+     "Scp069"
 )
 
 function Execute {
