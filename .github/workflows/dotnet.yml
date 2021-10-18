@@ -1,4 +1,4 @@
-name: Cerberus CI
+name: Build Plugin
 # No se que significa exactamente CI, asi que Ok.
 
 on:
@@ -32,8 +32,6 @@ jobs:
       run: |
         Invoke-WebRequest -Uri ${{ env.EXILED_REFERENCES_URL }} -OutFile ${{ github.workspace }}/Dev.zip
         Expand-Archive -Path Dev.zip -DestinationPath ${{ env.EXILED_REFERENCES_PATH }}
-        Invoke-WebRequest -Uri "https://github.com/SCPStats/Plugin/releases/download/1.4.1/SCPStats.dll" -OutFile ${{ env.EXILED_REFERENCES_PATH }}/SCPStats.dll
-
     - name: Build
       env:
         EXILED_REFERENCES: ${{ env.EXILED_REFERENCES_PATH }}
@@ -47,4 +45,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Build Results
-        path: CerberusProjects/bin/Debug
+        path: SCP-069/bin/Debug
