@@ -1,7 +1,9 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
+using Exiled.CustomItems.API;
 using Exiled.Events.EventArgs;
+using InventorySystem;
 using MEC;
 using Scp069.System;
 using System;
@@ -194,11 +196,13 @@ namespace Scp069.Component
                 ev.Killer.Scale = ev.Target.Scale;
             }
             // Inventory
-            ev.Killer.ResetInventory(ev.Target.Inventory.items.ToList());
+            var victimInventory = ev.Target.Items;
+            ev.Killer.ResetInventory((List<ItemType>)victimInventory);
             ItemType t = ItemType.None;
+
             if (ev.Target.CurrentItem != null)
             {
-                t = ev.Target.CurrentItem.id;
+                t = ev.Target.CurrentItem.Type;
             }
             ev.Target.ClearInventory();
             //Heal
@@ -238,7 +242,7 @@ namespace Scp069.Component
         /// <param name="ev"></param>
         private void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.Target == scp069 && ev.HitInformations.GetDamageType() == DamageTypes.Scp207)
+            if (ev.Target == scp069 && ev.DamageType == DamageTypes.Scp207)
             {
                 ev.Amount = 0;
             }
@@ -322,7 +326,9 @@ namespace Scp069.Component
                 foreach (Player player in Player.List)
                 {
                     player.SendFakeSyncVar(scp069.ReferenceHub.networkIdentity, typeof(Inventory),
-                  nameof(Inventory.Network_curItemSynced), (sbyte)it);
+                  nameof(Inventory.NetworkCurItem), (sbyte)it);
+
+                    
                 }
             }
             catch (Exception e)
