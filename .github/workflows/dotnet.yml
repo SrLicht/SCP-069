@@ -46,3 +46,4 @@ jobs:
       with:
         name: Build Results
         path: SCP-069/bin/Debug
+        retention-days: 3
