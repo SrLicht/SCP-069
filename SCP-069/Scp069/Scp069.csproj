@@ -10,8 +10,7 @@
 	<Import Project="../069.props" />
 	
 	<ItemGroup>
-     <PackageReference Include="EXILED" Version="3.0.5" />
-     <PackageReference Include="MySqlConnector" Version="1.0.0" />
+     <PackageReference Include="EXILED" Version="4.1.5" />
      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	 <PackageReference Include="YamlDotNet" Version="$(YamlDotNetVersion)" />
      <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
@@ -28,5 +27,9 @@
      <Reference Include="UnityEngine.CoreModule" HintPath="$(EXILED_References)\UnityEngine.CoreModule.dll" Private="false" />
      <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(EXILED_References)\UnityEngine.UnityWebRequestModule.dll" Private="false" />
   </ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Handlers\Command\" />
+	</ItemGroup>
   
 </Project>

@@ -8,7 +8,7 @@ namespace Scp069.System
     {
         [Description("The color that the SCP-069 Tag will have")]
         public string RankColor { get; set; } = "#F11F1F";
-        [Description("Determines if SCP-069 victims should leave bodies upon killing someone")]
+        [Description("Determines if SCP-069 victims should leave bodies upon killing someone | This is broken since update 11.1 give thanks to NW")]
         public bool spawnVictimsRagdolls { get; set; } = false;
         [Description("The intensity of SCP-207 that will be given to SCP-069 when killing, if the amount is 0 no movement speed will be given.")]
         public byte movementSpeedIntesify { get; set; } = 1;
@@ -16,13 +16,13 @@ namespace Scp069.System
         public float movementSpeedDuration { get; set; } = 15f;
         [Description("The duration of the movement speed should be accumulated ?")]
         public bool movementSpeedShoulbeAccumulated { get; set; } = true;
-        [Description("SCP-069 took damage every X seconds. (X being the number specified below)")]
+        [Description("SCP-069 takes X damage every second. (X is the numerical value that you will have to specify below).")]
         public float DamageEvery { get; set; } = 10;
         [Description("The initial damage that SCP-069 will receive.")]
         public float DamagePerTick { get; set; } = 5f;
         [Description("For every second that passes, the damage increases by the amount you put here")]
         public float IncreaseDamageBy { get; set; } = 10;
-        [Description("After this time, SCP-069 will begin to take damage for every second. Technically it is a Spawn protect.")]
+        [Description("After this time, SCP-069 will begin to take damage for every second. Technically it is a Spawn protect but from its passive..")]
         public float GracePeriodStart { get; set; } = 30;
         [Description("When SCP-069 kills someone, they will not take damage per second, for as long as you specify (In seconds obviously)")]
         public float GracePeriodOnKill { get; set; } = 15;
