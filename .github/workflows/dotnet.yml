@@ -8,7 +8,7 @@ on:
 env:
   # Para la version 11.0 el link de referencias tiene que ser este https://www.exiled.host/build_deps/Master.zip 
   # Pero si es para la beta https://exiled.host/build_deps/Dev.zip
-  EXILED_REFERENCES_URL: https://www.exiled.host/build_deps/Master.zip
+  EXILED_REFERENCES_URL: https://www.exiled.host/build_deps/References.zip
   EXILED_REFERENCES_PATH: ${{ github.workspace }}/References
 
 jobs:

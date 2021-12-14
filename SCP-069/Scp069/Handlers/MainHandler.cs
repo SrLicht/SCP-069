@@ -62,15 +62,15 @@ namespace Scp069.Handlers
         {
             try
             {
-                Timing.CallDelayed(2.2f, () =>
+                Timing.CallDelayed(2.5f, () =>
                 {
 
                     int classd = Player.Get(RoleType.ClassD).Count();
 
-                    if (classd >= Plugin.Config.Scp069.ClonerRatsNeeded)
+                    if (classd >= Plugin.Config.Scp069.ClassdNeeded)
                     {
 
-                        if (UnityEngine.Random.Range(0, 101) <= Plugin.Config.Scp069.ClonerChance)
+                        if (UnityEngine.Random.Range(0, 101) <= Plugin.Config.Scp069.SpawnChance)
                         {
                             var plist = Player.List.Where(p => !p.IsScp);
                             Player scp069 = plist.Random();

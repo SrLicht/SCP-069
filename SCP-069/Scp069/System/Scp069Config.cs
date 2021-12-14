@@ -17,23 +17,25 @@ namespace Scp069.System
         [Description("The duration of the movement speed should be accumulated ?")]
         public bool movementSpeedShoulbeAccumulated { get; set; } = true;
         [Description("SCP-069 took damage every X seconds. (X being the number specified below)")]
-        public float ClonerDamageEvery { get; set; } = 10;
+        public float DamageEvery { get; set; } = 10;
+        [Description("The initial damage that SCP-069 will receive.")]
+        public float DamagePerTick { get; set; } = 5f;
         [Description("For every second that passes, the damage increases by the amount you put here")]
-        public float ClonerIncreaseDamageBy { get; set; } = 10;
+        public float IncreaseDamageBy { get; set; } = 10;
         [Description("After this time, SCP-069 will begin to take damage for every second. Technically it is a Spawn protect.")]
         public float GracePeriodStart { get; set; } = 30;
         [Description("When SCP-069 kills someone, they will not take damage per second, for as long as you specify (In seconds obviously)")]
         public float GracePeriodOnKill { get; set; } = 15;
         [Description("The amount of Class-D required for 069 to appear")]
-        public int ClonerRatsNeeded { get; set; } = 4;
+        public int ClassdNeeded { get; set; } = 4;
         [Description("The probability that SCP-069 will appear, if the above requirement is met")]
-        public int ClonerChance { get; set; } = 55;
+        public int SpawnChance { get; set; } = 55;
         [Description("The amount of HP SCP-069 has")]
-        public int ClonerHealth { get; set; } = 1540;
+        public int Health { get; set; } = 1540;
         [Description("The maximum HP that SCP-069 can achieve")]
-        public int ClonerMaxHealth { get; set; } = 2000;
+        public int MaxHealth { get; set; } = 2000;
         [Description("As it says, the amount of life that is healed by killing.")]
-        public int ClonerLifesteal { get; set; } = 150;
+        public int Lifesteal { get; set; } = 150;
     }
     public class BroadcastSetting
     {

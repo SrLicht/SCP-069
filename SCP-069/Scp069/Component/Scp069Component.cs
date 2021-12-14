@@ -33,7 +33,7 @@ namespace Scp069.Component
         {
             InvokeRepeating("DoDamage", 0.1f, 1f);
             scp069.ClearBroadcasts();
-            scp069.Broadcast(Plugin.Instance.Config.Broadcasting.SpawnBroadcastDuration, Plugin.Instance.Config.Broadcasting.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.Scp069.ClonerDamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.Scp069.ClonerLifesteal.ToString()));
+            scp069.Broadcast(Plugin.Instance.Config.Broadcasting.SpawnBroadcastDuration, Plugin.Instance.Config.Broadcasting.SpawnBroadcast.Replace("{dmg}", Plugin.Instance.Config.Scp069.DamageEvery.ToString()).Replace("{heal}", Plugin.Instance.Config.Scp069.Lifesteal.ToString()));
 
         }
         private void OnDestroy()
@@ -93,8 +93,8 @@ namespace Scp069.Component
             scp069.ReferenceHub.nicknameSync.ShownPlayerInfo &= ~PlayerInfoArea.Nickname;
             scp069.ReferenceHub.nicknameSync.ShownPlayerInfo &= ~PlayerInfoArea.Role;
 
-            scp069.Health = Plugin.Instance.Config.Scp069.ClonerHealth;
-            scp069.MaxHealth = Plugin.Instance.Config.Scp069.ClonerMaxHealth;
+            scp069.Health = Plugin.Instance.Config.Scp069.Health;
+            scp069.MaxHealth = Plugin.Instance.Config.Scp069.MaxHealth;
 
             enableDamage = Timing.RunCoroutine(EnableDamage(Plugin.Instance.Config.Scp069.GracePeriodStart));
 
@@ -142,8 +142,8 @@ namespace Scp069.Component
             if (damageEnable && damageTimer <= Time.time)
             {
                 scp069.Hurt(damageDeal, DamageTypes.RagdollLess, "SCP-069");
-                damageDeal += Plugin.Instance.Config.Scp069.ClonerIncreaseDamageBy;
-                damageTimer = Time.time + Plugin.Instance.Config.Scp069.ClonerDamageEvery;
+                damageDeal += Plugin.Instance.Config.Scp069.IncreaseDamageBy;
+                damageTimer = Time.time + Plugin.Instance.Config.Scp069.DamageEvery;
             }
         }
 
@@ -206,8 +206,8 @@ namespace Scp069.Component
             }
             ev.Target.ClearInventory();
             //Heal
-            var amount = Plugin.Instance.Config.Scp069.ClonerLifesteal;
-            ev.Killer.Health = Mathf.Clamp(ev.Killer.Health + amount, 1, Plugin.Instance.Config.Scp069.ClonerMaxHealth);
+            var amount = Plugin.Instance.Config.Scp069.Lifesteal;
+            ev.Killer.Health = Mathf.Clamp(ev.Killer.Health + amount, 1, Plugin.Instance.Config.Scp069.MaxHealth);
             // Damage to deal
             damageDeal = 10;
             // Broadcast to Victim
@@ -242,7 +242,7 @@ namespace Scp069.Component
         /// <param name="ev"></param>
         private void OnHurting(HurtingEventArgs ev)
         {
-            if (ev.Target == scp069 && ev.DamageType == DamageTypes.Scp207)
+            if (ev.Target == scp069 && ev.Handler.Type == DamageType.Scp207)
             {
                 ev.Amount = 0;
             }
@@ -253,11 +253,13 @@ namespace Scp069.Component
         /// </summary>
         private void OnSpawnRagdoll(SpawningRagdollEventArgs ev)
         {
-            if (ev.Killer != scp069) return;
+            //Broken.. Thanks nw.
+
+            /*if (ev.Killer != scp069) return;
             if (!Plugin.Instance.Config.Scp069.spawnVictimsRagdolls)
             {
                 ev.IsAllowed = false;
-            }
+            }*/
         }
 
         /// <summary>
