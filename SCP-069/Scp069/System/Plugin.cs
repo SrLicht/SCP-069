@@ -1,5 +1,4 @@
 ﻿using Exiled.API.Features;
-using Exiled.CustomRoles;
 using Exiled.CustomRoles.API.Features;
 using System;
 using System.Collections.Generic;

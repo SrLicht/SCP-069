@@ -1,19 +1,13 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using Assets._Scripts.Dissonance;
-using Exiled.API.Enums;
-using Exiled.API.Extensions;
+﻿using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Attributes;
-using Exiled.API.Features.Items;
 using Exiled.API.Features.Spawn;
-using Exiled.CustomItems.API.Features;
 using Exiled.CustomRoles.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
 using PlayerStatsSystem;
-using UnityEngine;
+using System.Collections.Generic;
+using System.ComponentModel;
 using YamlDotNet.Serialization;
 
 namespace Scp069.Handlers.Role
@@ -219,7 +213,7 @@ namespace Scp069.Handlers.Role
 
         private IEnumerator<float> UpdateShape(Player player)
         {
-            for (;;)
+            for (; ; )
             {
                 yield return Timing.WaitForSeconds(20f);
                 player.ChangeAppearance(VisibleRole);
@@ -233,7 +227,7 @@ namespace Scp069.Handlers.Role
 
         private IEnumerator<float> Degeneration(Player ply)
         {
-            for (;;)
+            for (; ; )
             {
                 if (InGraceSpawn)
                 {
@@ -256,7 +250,7 @@ namespace Scp069.Handlers.Role
 
                     Damage += DamageAddPerTick;
                 }
-                
+
             }
         }
     }

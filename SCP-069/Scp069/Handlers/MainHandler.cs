@@ -2,10 +2,7 @@
 using Exiled.CustomRoles.API;
 using Exiled.CustomRoles.API.Features;
 using Exiled.Events.EventArgs;
-using MEC;
 using Scp069.System;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Scp069.Handlers
@@ -29,9 +26,9 @@ namespace Scp069.Handlers
                 if (Player.List.Count() < Plugin.Config.PlayersNeededToSpawn)
                     return;
 
-                if(Plugin.random.Next(1, 100) <= Plugin.Config.Scp069Chance)
+                if (Plugin.random.Next(1, 100) <= Plugin.Config.Scp069Chance)
                 {
-                    if(CustomRole.TryGet(69, out var scp069))
+                    if (CustomRole.TryGet(69, out var scp069))
                     {
                         scp069.AddRole(ev.Player);
                     }
