@@ -8,12 +8,14 @@ namespace Scp069.System
         public bool IsEnabled { get; set; } = true;
         [Description("True to disable the ASCII logo on the console, in case one should bother you")]
         public bool NotLogo { get; set; } = false;
-        [Description("Show some Logs.Debug, you should turn this on if something doesn't work properly.")]
-        public bool Debug { get; set; } = false;
-        public BroadcastSetting Broadcasting { get; set; } = new BroadcastSetting();
-        public Scp069Config Scp069 { get; set; } = new Scp069Config();
-        public CommandTranslate TranslateCommand { get; set; } = new CommandTranslate();
 
+        [Description("If the list of players is less than this amount, SCP-069 will not appear.")]
+        public int PlayersNeededToSpawn { get; set; } = 10;
+
+        [Description("What is the probability that a SCP-069 will appear?")]
+        public int Scp069Chance { get; set; } = 45;
+
+        public Scp069.Handlers.Role.Scp069Role Scp069Config { get; set; } = new Handlers.Role.Scp069Role();
     }
 
 
