@@ -10,7 +10,13 @@
 	<Import Project="../069.props" />
 	
 	<ItemGroup>
-     <PackageReference Include="EXILED" Version="4.1.5" />
+	  <Compile Remove="Handlers\Command\**" />
+	  <EmbeddedResource Remove="Handlers\Command\**" />
+	  <None Remove="Handlers\Command\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+     <PackageReference Include="EXILED" Version="5.2.1" />
      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	 <PackageReference Include="YamlDotNet" Version="$(YamlDotNetVersion)" />
      <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
@@ -27,9 +33,5 @@
      <Reference Include="UnityEngine.CoreModule" HintPath="$(EXILED_References)\UnityEngine.CoreModule.dll" Private="false" />
      <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(EXILED_References)\UnityEngine.UnityWebRequestModule.dll" Private="false" />
   </ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Handlers\Command\" />
-	</ItemGroup>
   
 </Project>
