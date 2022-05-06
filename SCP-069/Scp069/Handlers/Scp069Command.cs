@@ -4,7 +4,7 @@ using RemoteAdmin;
 using Scp069.System;
 using System;
 
-namespace Scp069.EventHandlers
+/*namespace Scp069.EventHandlers
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class Scp069Command : ICommand
@@ -196,3 +196,4 @@ namespace Scp069.EventHandlers
         }
     }
 }
+    */
