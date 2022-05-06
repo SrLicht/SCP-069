@@ -1,4 +1,6 @@
 ﻿using Exiled.API.Features;
+using Exiled.CustomRoles;
+using Exiled.CustomRoles.API.Features;
 using System;
 using System.Collections.Generic;
 
@@ -54,6 +56,8 @@ namespace Scp069.System
                 }
                 #endregion
 
+                CustomRole.RegisterRoles(overrideClass: Config.Scp069Config);
+
                 base.OnEnabled();
             }
             catch (Exception e)
@@ -77,10 +81,8 @@ namespace Scp069.System
             {
                 Log.Info("Loading MainHandler...");
                 handlers = new List<Base.Handler> { new Handlers.MainHandler() };
-                foreach (var item in handlers)
-                {
-                    item.Start();
-                }
+
+                handlers.ForEach(handler => handler.Start());
                 Log.Info("Plugin fully loaded.");
             }
             catch (Exception e)
@@ -92,14 +94,10 @@ namespace Scp069.System
         }
         public void UnRegisteringEvents()
         {
-            foreach (var item in handlers)
-            {
-                item.Stop();
-            }
-
-            Log.Info("Good bye.");
-            random = null;
+            handlers.ForEach((handler) => handler.Stop());
+            handlers.Clear();
             handlers = null;
+            random = null;
 
         }
     }
