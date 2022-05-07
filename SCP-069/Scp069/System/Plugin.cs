@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Exiled.CustomRoles;
 using Exiled.CustomRoles.API.Features;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Scp069.System
         /// </summary>
         public static Plugin Instance => Singleton;
 
+        public override string Name => "SCP-069";
+        public override string Prefix => "Scp_069";
         public override Version Version => new Version(2, 0, 11);
         public override Version RequiredExiledVersion => new Version(2, 11, 1);
         public override string Author { get; } = "SrLicht & Beryl";
