@@ -1,5 +1,11 @@
-﻿
-/*namespace Scp069.EventHandlers
+﻿using CommandSystem;
+using Exiled.API.Features;
+using Exiled.CustomRoles.API.Features;
+using RemoteAdmin;
+using Scp069.System;
+using System;
+
+namespace Scp069.EventHandlers
 {
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class Scp069Command : ICommand
@@ -34,8 +40,9 @@
                     {
                         case "list":
                             {
-                                string r = AllScps069();
-                                response = r;
+                                var msg = GetAll069();
+
+                                response = msg;
                                 return true;
                             }
                         case "give":
@@ -60,29 +67,37 @@
                                         response = $"{Plugin.Instance.Config.TranslateCommand.SpecifiedPlayerDoesNotExist}";
                                         return false;
                                     }
-                                    if (Handlers.MainHandler.scp069Players.Contains(plytogive))
+                                    if(CustomRole.TryGet(69, out var role))
                                     {
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_PlayerAlreadyis}";
+                                        role.AddRole(plytogive);
+
+                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        response = "Error on get SCP069Role";
                                         return false;
                                     }
-
-                                    plytogive.GameObject.AddComponent<Component.Scp069Component>();
-                                    response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_GivingtoAnotherPlayer.Replace("{nick}", plytogive.Nickname)}";
-                                    return true;
-
+ 
                                 }
                                 else
                                 {
-                                    var plySender = Player.Get((sender as CommandSender).SenderId);
+                                    var plySender = Player.Get(sender);
 
-                                    if (Handlers.MainHandler.scp069Players.Contains(plySender))
+                                    if (CustomRole.TryGet(69, out var role))
                                     {
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.GiveCommand_PlayerAlreadyis}";
+                                        role.AddRole(plySender);
+
+                                        response = $"\n{Plugin.Instance.Config.TranslateCommand.GiveCommand_Givingtoyou}";
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        response = "Error on get SCP069Role";
                                         return false;
                                     }
-                                    plySender.GameObject.AddComponent<Component.Scp069Component>();
-                                    response = $"\n{Plugin.Instance.Config.TranslateCommand.GiveCommand_Givingtoyou}";
-                                    return true;
+                                   
                                 }
                             }
                         case "remove":
@@ -108,10 +123,19 @@
 
                                     try
                                     {
-                                        plytoremove.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
-                                        component.Destroy();
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
-                                        return true;
+                                        if (CustomRole.TryGet(69, out var role))
+                                        {
+                                            role.RemoveRole(plytoremove);
+
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingPlayer.Replace("{nick}", plytoremove.Nickname)}";
+                                            return true;
+                                        }
+                                        else
+                                        {
+                                            response = "Error on get SCP069Role";
+                                            return false;
+                                        }
+                                        
                                     }
                                     catch (Exception)
                                     {
@@ -124,13 +148,23 @@
                                 else
                                 {
 
-                                    var plySender = Player.Get((sender as CommandSender).SenderId);
+                                    var plySender = Player.Get(sender);
                                     try
                                     {
-                                        plySender.GameObject.TryGetComponent<Component.Scp069Component>(out var component);
-                                        component.Destroy();
-                                        response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
-                                        return true;
+
+                                        if (CustomRole.TryGet(69, out var role))
+                                        {
+                                            role.RemoveRole(plySender);
+
+                                            response = $"{Plugin.Instance.Config.TranslateCommand.RemoveCommand_RemovingYou}";
+                                            return true;
+                                        }
+                                        else
+                                        {
+                                            response = "Error on get SCP069Role";
+                                            return false;
+                                        }
+                                        
                                     }
                                     catch (Exception)
                                     {
@@ -173,22 +207,29 @@
             }
 
         }
-        private string AllScps069()
+
+        private string GetAll069()
         {
             string msg = $"{Plugin.Instance.Config.TranslateCommand.Scp069ListTitle}\n";
-            if (Handlers.MainHandler.scp069Players.Count > 0)
+            var scpcount = 0;
+
+            foreach (var ply in Player.List)
             {
-                foreach (Player ply in Handlers.MainHandler.scp069Players)
+                if (ply.SessionVariables.ContainsKey("IsSCP069"))
                 {
                     msg += $"{Plugin.Instance.Config.TranslateCommand.Scp069ListPerPerson.Replace("{id}", ply.Id.ToString()).Replace("{nick}", ply.Nickname)}\n";
+                    scpcount++;
                 }
+            }
+
+            if(scpcount == 0)
+            {
+                return $"{Plugin.Instance.Config.TranslateCommand.NoScp069InList}\n";
             }
             else
             {
-                msg = $"{Plugin.Instance.Config.TranslateCommand.NoScp069InList}\n";
+                return msg;
             }
-            return msg;
         }
     }
 }
-    */
