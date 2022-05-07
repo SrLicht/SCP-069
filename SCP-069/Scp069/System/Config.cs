@@ -1,5 +1,7 @@
 ﻿using Exiled.API.Interfaces;
 using System.ComponentModel;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
 
 namespace Scp069.System
 {
@@ -16,7 +18,8 @@ namespace Scp069.System
         public int Scp069Chance { get; set; } = 45;
 
         public Scp069.Handlers.Role.Scp069Role Scp069Config { get; set; } = new Handlers.Role.Scp069Role();
+
+        public CommandTranslate TranslateCommand { get; set; } = new CommandTranslate();
+
     }
-
-
 }
